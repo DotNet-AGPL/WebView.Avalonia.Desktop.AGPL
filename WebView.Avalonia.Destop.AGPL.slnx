@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/.build/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Packages.targets" />
+  </Folder>
+  <Folder Name="/.build/build/">
+    <File Path="build/Directory.build.common.props" />
+    <File Path="build/Directory.build.common.targets" />
+    <File Path="build/Directory.build.operation.common.props" />
+    <File Path="build/Directory.Packages.targets" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/WebView.Avalonia.Core/WebView.Avalonia.Core.csproj" />
+    <Project Path="src/WebView.Avalonia.Desktop/WebView.Avalonia.Desktop.csproj" />
+  </Folder>
+  <Folder Name="/src/Platform/">
+    <Project Path="src/Platform/WebView.Avalonia.Windows/WebView.Avalonia.Windows.csproj" />
+  </Folder>
+  <Folder Name="/src/Sample/">
+    <Project Path="src/Sample/AvaloniaApp/AvaloniaApp.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,24 @@
+﻿<Project>
+	<PropertyGroup>
+		<!--Package-->
+		<PackageId Condition="'$(PackageId)' == ''">$(MSBuildProjectName)</PackageId>
+		<Title  Condition="'$(Title)' == ''">$(MSBuildProjectName)</Title>
+		<WebviewVersion>11.0.0.2026011501</WebviewVersion>
+		<WebViewPackageOutputPath>$(RepositoryDirectory)_nuget\</WebViewPackageOutputPath>
+		<VersionPrefix>avalonia11.0.0</VersionPrefix>
+		<Authors>DotNet-AGPL</Authors>
+		<Company>AGPL</Company>
+		<Description>This is a webview control.</Description>
+		<PackageTags>WebView for AvaloniaUI</PackageTags>
+		<RepositoryUrl>https://github.com/DotNet-AGPL/Avalonia.WebView</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/DotNet-AGPL/Avalonia.WebView</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>webview@avalonia-logo.png</PackageIcon>
+		<Version>$(WebviewVersion)</Version>
+		<PackageOutputPath>$(WebViewPackageOutputPath)</PackageOutputPath>
+	</PropertyGroup>
+</Project>
