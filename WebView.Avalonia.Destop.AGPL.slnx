@@ -5,11 +5,11 @@
     <File Path="Directory.Packages.props" />
     <File Path="Directory.Packages.targets" />
   </Folder>
-  <Folder Name="/.build/build/">
-    <File Path="build/Directory.build.common.props" />
-    <File Path="build/Directory.build.common.targets" />
-    <File Path="build/Directory.build.operation.common.props" />
-    <File Path="build/Directory.Packages.targets" />
+  <Folder Name="/.build/buildtools/">
+    <File Path="buildtools/Directory.build.common.props" />
+    <File Path="buildtools/Directory.build.common.targets" />
+    <File Path="buildtools/Directory.build.operation.common.props" />
+    <File Path="buildtools/Directory.webview.desktop.common.targets" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/WebView.Avalonia.Core/WebView.Avalonia.Core.csproj" />
