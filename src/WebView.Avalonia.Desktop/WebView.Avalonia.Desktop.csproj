@@ -6,14 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Platform\WebView.Avalonia.Linux\WebView.Avalonia.Linux.csproj" />
+    <ProjectReference Include="..\Platform\WebView.Avalonia.Mac\WebView.Avalonia.Mac.csproj" />
     <ProjectReference Include="..\Platform\WebView.Avalonia.Windows\WebView.Avalonia.Windows.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="PolySharp">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

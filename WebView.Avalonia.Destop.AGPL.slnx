@@ -16,6 +16,8 @@
     <Project Path="src/WebView.Avalonia.Desktop/WebView.Avalonia.Desktop.csproj" />
   </Folder>
   <Folder Name="/src/Platform/">
+    <Project Path="src/Platform/WebView.Avalonia.Linux/WebView.Avalonia.Linux.csproj" Id="4980f682-2418-4ea7-a11b-8755093eeb4d" />
+    <Project Path="src/Platform/WebView.Avalonia.Mac/WebView.Avalonia.Mac.csproj" Id="3bef0275-e843-49c8-9708-2150c540f19b" />
     <Project Path="src/Platform/WebView.Avalonia.Windows/WebView.Avalonia.Windows.csproj" />
   </Folder>
   <Folder Name="/src/Sample/">

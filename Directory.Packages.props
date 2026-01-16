@@ -4,22 +4,21 @@
     <AvaloniaVersion>11.3.0</AvaloniaVersion>
     <Avalonia_I_Want_To_Use_Private_Apis_In_Nuget_Package_And_Promise_To_Pin_The_Exact_Avalonia_Version_In_Package_Dependency>false</Avalonia_I_Want_To_Use_Private_Apis_In_Nuget_Package_And_Promise_To_Pin_The_Exact_Avalonia_Version_In_Package_Dependency>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="ReactiveUI.Avalonia" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3650.58" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="PolySharp" Version="1.15.0" />
-	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.102" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="MonoMac.NetStandard" Version="0.0.4" />
