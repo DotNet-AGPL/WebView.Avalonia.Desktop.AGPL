@@ -1,6 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Project>
-	<Import Project="$(BuildToolsDirectory)Directory.build.common.targets" />
+	<!-- Import Project="$(BuildToolsDirectory)Directory.build.common.targets" / -->
+  
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0' ">
+		<DefineConstants>NETSTANDARD2_1_OR_GREATER</DefineConstants>
+	</PropertyGroup>
+
+	<!-- Configure trimming for projects -->
+	<PropertyGroup>
+		<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+		<IsTrimmable>true</IsTrimmable>
+	</PropertyGroup>
+
+	<ItemGroup  Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="PolySharp">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+	</ItemGroup>
+
+	<PropertyGroup  Condition="'$(TargetFramework)' == 'netstandard2.1' ">
+		<PolySharpIncludeGeneratedTypes>
+			System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
+			System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute;
+			System.Diagnostics.CodeAnalysis.MemberNotNullAttribute;
+			System.Diagnostics.CodeAnalysis.NotNullAttribute;
+			System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute;
+			System.Diagnostics.CodeAnalysis.NotNullWhenAttribute;
+			System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute;
+			System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute;
+			System.Runtime.CompilerServices.CallerArgumentExpressionAttribute;
+			System.Runtime.CompilerServices.IsExternalInit;
+			System.Runtime.CompilerServices.SkipLocalsInitAttribute;
+			System.Runtime.CompilerServices.RequiredMemberAttribute;
+			System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute;
+		</PolySharpIncludeGeneratedTypes>
+	</PropertyGroup>
+  
   <!-- Import Project="$(RepositoryDirectory)Directory.Packages.targets" / -->
+  
+  
+  
+  
 </Project>

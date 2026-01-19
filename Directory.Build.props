@@ -7,8 +7,68 @@
 		<OutputPath>$(RepositoryDirectory)_output\$(MSBuildProjectName)\bin\</OutputPath>
 	</PropertyGroup>
 
-	<Import Project="$(BuildToolsDirectory)Directory.build.common.props" />
-	<Import Project="$(BuildToolsDirectory)Directory.build.operation.common.props" />
+  <!-- Import Project="$(BuildToolsDirectory)Directory.build.common.props" / -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <DebugType>portable</DebugType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>true</AppendRuntimeIdentifierToOutputPath>
+
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableLiveReload>true</EnableLiveReload>
+
+    <!--default language-->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+
+    <!-- Required for C# Hot Reload -->
+    <UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
+
+    <!--this is a func can add more warning info in the source code file-->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <NoWarn>$(NoWarn);CS8500;CS1591;CS1572</NoWarn>
+    <WarningsAsErrors>nullable,CS1570,CS1571,CS1572,CS1573,CS1574,CS1734</WarningsAsErrors>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+
+    <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+
+  <!-- Import Project="$(BuildToolsDirectory)Directory.build.operation.common.props" / -->
+  <PropertyGroup>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <WebViewTargetPlatform>win</WebViewTargetPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <WebViewTargetPlatform>osx</WebViewTargetPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <WebViewTargetPlatform>linux</WebViewTargetPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsWindows)'=='true'">
+    <DefineConstants>$(DefineConstants);__WINDOWS__</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsOSX)'=='true'">
+    <DefineConstants>$(DefineConstants);__OSX__</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsLinux)'=='true'">
+    <DefineConstants>$(DefineConstants);__LINUX__</DefineConstants>
+  </PropertyGroup>
 
 	<Choose>
 		<When Condition="'$(SourceLinkEnabled)' != 'false'">
