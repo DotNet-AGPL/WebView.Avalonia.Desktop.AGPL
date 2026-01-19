@@ -3,10 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        xmlns:local="clr-namespace:AvaloniaApp"
-        x:Class="AvaloniaApp.MainWindow"
-        Title="AvaloniaApp"  Width="450" Height="450">
-    <!-- 直接使用自定义 WebView2 控件，设置初始网址 -->
-        <local:WebView2Control Url="https://www.so.com" 
-               Width="450" Height="450" />
+        x:Class="AvaloniaApp2.MainWindow"
+        Title="AvaloniaApp2">
+    Welcome to Avalonia!
 </Window>

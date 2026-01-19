@@ -22,5 +22,6 @@
   </Folder>
   <Folder Name="/src/Sample/">
     <Project Path="src/Sample/AvaloniaApp/AvaloniaApp.csproj" />
+    <Project Path="src/Sample/AvaloniaApp2/AvaloniaApp2.csproj" Id="3c9af577-8008-42b8-ba9b-55ca2bdb8d0e" />
   </Folder>
 </Solution>

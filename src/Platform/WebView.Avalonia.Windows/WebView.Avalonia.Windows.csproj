@@ -6,11 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Diagnostics" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\WebView.Avalonia.Core\WebView.Avalonia.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.WebView2.Core">
+      <HintPath>lib\Microsoft.Web.WebView2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Diagnostics" />
+  </ItemGroup>
+
+  <Import Project="$(RepositoryDirectory)Directory.Packages.targets" />
 </Project>

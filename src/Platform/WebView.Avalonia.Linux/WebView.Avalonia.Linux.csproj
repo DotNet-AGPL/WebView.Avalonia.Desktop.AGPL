@@ -9,4 +9,5 @@
     <ProjectReference Include="..\..\WebView.Avalonia.Core\WebView.Avalonia.Core.csproj" />
   </ItemGroup>
 
+  <Import Project="$(RepositoryDirectory)Directory.Packages.targets" />
 </Project>

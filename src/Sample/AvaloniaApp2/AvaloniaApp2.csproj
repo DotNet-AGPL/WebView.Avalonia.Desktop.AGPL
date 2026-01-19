@@ -5,9 +5,6 @@
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-
-    <!-- 内嵌 WebView2 运行时（避免依赖系统安装） -->
-    <WebView2FixedVersionRuntimeDistribution>true</WebView2FixedVersionRuntimeDistribution>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,15 +17,5 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Web.WebView2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- ProjectReference Include="..\..\WebView.Avalonia.Desktop\WebView.Avalonia.Desktop.csproj" / -->
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- 保留控件所在程序集 -->
-    <TrimmerRootAssembly Include="$(AssemblyName)" />
   </ItemGroup>
 </Project>

@@ -1,17 +1,12 @@
 using Avalonia.Controls;
 
-namespace AvaloniaApp
+namespace AvaloniaApp2
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-
-            if (Design.IsDesignMode) 
-            {
-                return;
-            }
         }
     }
 }
