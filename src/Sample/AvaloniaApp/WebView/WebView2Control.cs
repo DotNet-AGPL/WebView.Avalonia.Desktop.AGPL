@@ -46,7 +46,9 @@ public class WebView2Control : Control, IDisposable
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core.Raw")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.MarshalAsAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.InAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.OutAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.UnmanagedType))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.CharSet))]
     static WebView2Control(){
         InitSwitch();
 
@@ -99,8 +101,6 @@ public class WebView2Control : Control, IDisposable
         var methods = type?.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static).Select(m => m.Name).ToArray();
 
         logger.LogInformation($"Type.GetType(\"System.StubHelpers.InterfaceMarshaler\") = {string.Join("、", methods ?? new string[0])}");
-
-        
 
         try
         {
