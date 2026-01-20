@@ -7,30 +7,17 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IsAotCompatible>true</IsAotCompatible>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <WebView2FixedVersionRuntimeDistribution>true</WebView2FixedVersionRuntimeDistribution>
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <!--
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <WebView2FixedVersionRuntimeDistribution>true</WebView2FixedVersionRuntimeDistribution>
+    <IsAotCompatible>true</IsAotCompatible>
     <TrimComInterop>false</TrimComInterop>
     <TrimMode>partial</TrimMode>
     <TrimInteropServices>false</TrimInteropServices>
     <ILLinkTrimAssemblyReferences>false</ILLinkTrimAssemblyReferences>
     -->
   </PropertyGroup>
-
-  <!--
-  <ItemGroup>
-    <TrimmerRootType Include="System.StubHelpers.InterfaceMarshaler">
-      <TrimKeepAllMembers>true</TrimKeepAllMembers>
-    </TrimmerRootType>
-    <TrimmerRootType Include="System.StubHelpers.StubHelpers">
-      <TrimKeepAllMembers>true</TrimKeepAllMembers>
-    </TrimmerRootType>
-    <TrimmerRootAssembly Include="System.Private.CoreLib" />
-    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
-  </ItemGroup>
-  -->
 
   <ItemGroup>
     <PackageReference Include="Avalonia" />
@@ -52,253 +39,17 @@
 
   <!-- 排除WebView2相关程序集的裁剪（核心） -->
   <ItemGroup>
+    <TrimmerRootAssembly Include="Avalonia" />
+    <TrimmerRootAssembly Include="Avalonia.*" />
+    <TrimmerRootAssembly Include="Avalonia.*.*" />
     <TrimmerRootAssembly Include="Microsoft.Web.WebView2.*" />
     <TrimmerRootAssembly Include="System.Private.CoreLib" />
     <TrimmerRootAssembly Include="System.Runtime.InteropServices" />
+    <TrimmerRootAssembly Include="$(AssemblyName)" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- ProjectReference Include="..\..\WebView.Avalonia.Desktop\WebView.Avalonia.Desktop.csproj" / -->
-  </ItemGroup>
-
-  <ItemGroup>
-    <TrimmerRootAssembly Include="$(AssemblyName)" />
-<!--
-    <LinkerDescriptor Include="Properties/linker.xml" />
-    <None Update="Properties\linker.xml" CopyToOutputDirectory="PreserveNewest" />
-    -->
-  </ItemGroup>
-  
-  <ItemGroup>
-    <!--
-    <RuntimeHostConfigurationOption Include="Microsoft.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.ComponentModel.DefaultValueAttribute.IsSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.ComponentModel.Design.IDesignerHost.IsSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.ComponentModel.TypeConverter.EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.ComponentModel.TypeDescriptor.IsComObjectDescriptorSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Reflection.Metadata.MetadataUpdater.IsSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Resources.ResourceManager.AllowCustomResourceTypes" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Resources.UseSystemResourceKeys" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Runtime.InteropServices.BuiltInComInterop.IsSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Runtime.InteropServices.EnableConsumingManagedCodeFromNativeHosting" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Runtime.InteropServices.EnableCppCLIHostActivation" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Runtime.InteropServices.Marshalling.EnableGeneratedComInterfaceComImportInterop" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.StartupHookProvider.IsSupported" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Threading.Thread.EnableAutoreleasePool" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Text.Encoding.EnableUnsafeUTF7Encoding" Value="true" />
-    <RuntimeHostConfigurationOption Include="System.Text.Json.JsonSerializer.IsReflectionEnabledByDefault" Value="true" />
-    <TrimmerRootAssembly Include="Avalonia.Base" />
-    <TrimmerAssemblyMetadata Include="Avalonia.Base" MetadataName="TrimmerAction" MetadataValue="skip" />
-    <TrimmerRootAssembly Include="Avalonia.Controls" />
-    <TrimmerRootAssembly Include="Avalonia.DesignerSupport" />
-    <TrimmerRootAssembly Include="Avalonia.Desktop" />
-    <TrimmerRootAssembly Include="Avalonia.Dialogs" />
-    <TrimmerRootAssembly Include="Avalonia" />
-    <TrimmerRootAssembly Include="Avalonia.Fonts.Inter" />
-    <TrimmerRootAssembly Include="Avalonia.FreeDesktop" />
-    <TrimmerRootAssembly Include="Avalonia.Markup" />
-    <TrimmerRootAssembly Include="Avalonia.Markup.Xaml" />
-    <TrimmerRootAssembly Include="Avalonia.Metal" />
-    <TrimmerRootAssembly Include="Avalonia.MicroCom" />
-    <TrimmerRootAssembly Include="Avalonia.Native" />
-    <TrimmerRootAssembly Include="Avalonia.OpenGL" />
-    <TrimmerRootAssembly Include="Avalonia.Remote.Protocol" />
-    <TrimmerRootAssembly Include="Avalonia.Skia" />
-    <TrimmerRootAssembly Include="Avalonia.Themes.Fluent" />
-    <TrimmerRootAssembly Include="Avalonia.Vulkan" />
-    <TrimmerRootAssembly Include="Avalonia.Win32.Automation" />
-    <TrimmerRootAssembly Include="Avalonia.Win32" />
-    <TrimmerRootAssembly Include="Avalonia.X11" />
-    <TrimmerRootAssembly Include="AvaloniaApp" />
-    <TrimmerRootAssembly Include="HarfBuzzSharp" />
-    <TrimmerRootAssembly Include="MicroCom.Runtime" />
-    <TrimmerRootAssembly Include="Microsoft.CSharp" />
-    <TrimmerRootAssembly Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-    <TrimmerRootAssembly Include="Microsoft.Extensions.DependencyInjection" />
-    <TrimmerRootAssembly Include="Microsoft.Extensions.Logging.Abstractions" />
-    <TrimmerRootAssembly Include="Microsoft.Extensions.Logging" />
-    <TrimmerRootAssembly Include="Microsoft.Extensions.Options" />
-    <TrimmerRootAssembly Include="Microsoft.Extensions.Primitives" />
-    <TrimmerRootAssembly Include="Microsoft.VisualBasic.Core" />
-    <TrimmerRootAssembly Include="Microsoft.VisualBasic" />
-    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
-    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.WinForms" />
-    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Wpf" />
-    <TrimmerRootAssembly Include="Microsoft.Win32.Primitives" />
-    <TrimmerRootAssembly Include="Microsoft.Win32.Registry" />
-    <TrimmerRootAssembly Include="mscorlib" />
-    <TrimmerRootAssembly Include="netstandard" />
-    <TrimmerRootAssembly Include="Serilog" />
-    <TrimmerRootAssembly Include="Serilog.Extensions.Logging" />
-    <TrimmerRootAssembly Include="Serilog.Sinks.File" />
-    <TrimmerRootAssembly Include="SkiaSharp" />
-    <TrimmerRootAssembly Include="System.AppContext" />
-    <TrimmerRootAssembly Include="System.Buffers" />
-    <TrimmerRootAssembly Include="System.Collections.Concurrent" />
-    <TrimmerRootAssembly Include="System.Collections" />
-    <TrimmerRootAssembly Include="System.Collections.Immutable" />
-    <TrimmerRootAssembly Include="System.Collections.NonGeneric" />
-    <TrimmerRootAssembly Include="System.Collections.Specialized" />
-    <TrimmerRootAssembly Include="System.ComponentModel.Annotations" />
-    <TrimmerRootAssembly Include="System.ComponentModel.DataAnnotations" />
-    <TrimmerRootAssembly Include="System.ComponentModel" />
-    <TrimmerRootAssembly Include="System.ComponentModel.EventBasedAsync" />
-    <TrimmerRootAssembly Include="System.ComponentModel.Primitives" />
-    <TrimmerRootAssembly Include="System.ComponentModel.TypeConverter" />
-    <TrimmerRootAssembly Include="System.Configuration" />
-    <TrimmerRootAssembly Include="System.Console" />
-    <TrimmerRootAssembly Include="System.Core" />
-    <TrimmerRootAssembly Include="System.Data.Common" />
-    <TrimmerRootAssembly Include="System.Data.DataSetExtensions" />
-    <TrimmerRootAssembly Include="System.Data" />
-    <TrimmerRootAssembly Include="System.Diagnostics.Contracts" />
-    <TrimmerRootAssembly Include="System.Diagnostics.Debug" />
-    <TrimmerRootAssembly Include="System.Diagnostics.DiagnosticSource" />
-    <TrimmerRootAssembly Include="System.Diagnostics.FileVersionInfo" />
-    <TrimmerRootAssembly Include="System.Diagnostics.Process" />
-    <TrimmerRootAssembly Include="System.Diagnostics.StackTrace" />
-    <TrimmerRootAssembly Include="System.Diagnostics.TextWriterTraceListener" />
-    <TrimmerRootAssembly Include="System.Diagnostics.Tools" />
-    <TrimmerRootAssembly Include="System.Diagnostics.TraceSource" />
-    <TrimmerRootAssembly Include="System.Diagnostics.Tracing" />
-    <TrimmerRootAssembly Include="System" />
-    <TrimmerRootAssembly Include="System.Drawing" />
-    <TrimmerRootAssembly Include="System.Drawing.Primitives" />
-    <TrimmerRootAssembly Include="System.Dynamic.Runtime" />
-    <TrimmerRootAssembly Include="System.Formats.Asn1" />
-    <TrimmerRootAssembly Include="System.Formats.Tar" />
-    <TrimmerRootAssembly Include="System.Globalization.Calendars" />
-    <TrimmerRootAssembly Include="System.Globalization" />
-    <TrimmerRootAssembly Include="System.Globalization.Extensions" />
-    <TrimmerRootAssembly Include="System.IO.Compression.Brotli" />
-    <TrimmerRootAssembly Include="System.IO.Compression" />
-    <TrimmerRootAssembly Include="System.IO.Compression.FileSystem" />
-    <TrimmerRootAssembly Include="System.IO.Compression.ZipFile" />
-    <TrimmerRootAssembly Include="System.IO" />
-    <TrimmerRootAssembly Include="System.IO.FileSystem.AccessControl" />
-    <TrimmerRootAssembly Include="System.IO.FileSystem" />
-    <TrimmerRootAssembly Include="System.IO.FileSystem.DriveInfo" />
-    <TrimmerRootAssembly Include="System.IO.FileSystem.Primitives" />
-    <TrimmerRootAssembly Include="System.IO.FileSystem.Watcher" />
-    <TrimmerRootAssembly Include="System.IO.IsolatedStorage" />
-    <TrimmerRootAssembly Include="System.IO.MemoryMappedFiles" />
-    <TrimmerRootAssembly Include="System.IO.Pipelines" />
-    <TrimmerRootAssembly Include="System.IO.Pipes.AccessControl" />
-    <TrimmerRootAssembly Include="System.IO.Pipes" />
-    <TrimmerRootAssembly Include="System.IO.UnmanagedMemoryStream" />
-    <TrimmerRootAssembly Include="System.Linq" />
-    <TrimmerRootAssembly Include="System.Linq.Expressions" />
-    <TrimmerRootAssembly Include="System.Linq.Parallel" />
-    <TrimmerRootAssembly Include="System.Linq.Queryable" />
-    <TrimmerRootAssembly Include="System.Memory" />
-    <TrimmerRootAssembly Include="System.Net" />
-    <TrimmerRootAssembly Include="System.Net.Http" />
-    <TrimmerRootAssembly Include="System.Net.Http.Json" />
-    <TrimmerRootAssembly Include="System.Net.HttpListener" />
-    <TrimmerRootAssembly Include="System.Net.Mail" />
-    <TrimmerRootAssembly Include="System.Net.NameResolution" />
-    <TrimmerRootAssembly Include="System.Net.NetworkInformation" />
-    <TrimmerRootAssembly Include="System.Net.Ping" />
-    <TrimmerRootAssembly Include="System.Net.Primitives" />
-    <TrimmerRootAssembly Include="System.Net.Quic" />
-    <TrimmerRootAssembly Include="System.Net.Requests" />
-    <TrimmerRootAssembly Include="System.Net.Security" />
-    <TrimmerRootAssembly Include="System.Net.ServicePoint" />
-    <TrimmerRootAssembly Include="System.Net.Sockets" />
-    <TrimmerRootAssembly Include="System.Net.WebClient" />
-    <TrimmerRootAssembly Include="System.Net.WebHeaderCollection" />
-    <TrimmerRootAssembly Include="System.Net.WebProxy" />
-    <TrimmerRootAssembly Include="System.Net.WebSockets.Client" />
-    <TrimmerRootAssembly Include="System.Net.WebSockets" />
-    <TrimmerRootAssembly Include="System.Numerics" />
-    <TrimmerRootAssembly Include="System.Numerics.Vectors" />
-    <TrimmerRootAssembly Include="System.ObjectModel" />
-    <TrimmerRootAssembly Include="System.Private.CoreLib" />
-    <TrimmerAssemblyMetadata Include="System.Private.CoreLib" MetadataName="TrimmerAction" MetadataValue="skip" />
-    <TrimmerRootAssembly Include="System.Private.DataContractSerialization" />
-    <TrimmerRootAssembly Include="System.Private.Uri" />
-    <TrimmerRootAssembly Include="System.Private.Xml" />
-    <TrimmerRootAssembly Include="System.Private.Xml.Linq" />
-    <TrimmerRootAssembly Include="System.Reflection.DispatchProxy" />
-    <TrimmerRootAssembly Include="System.Reflection" />
-    <TrimmerRootAssembly Include="System.Reflection.Emit" />
-    <TrimmerRootAssembly Include="System.Reflection.Emit.ILGeneration" />
-    <TrimmerRootAssembly Include="System.Reflection.Emit.Lightweight" />
-    <TrimmerRootAssembly Include="System.Reflection.Extensions" />
-    <TrimmerRootAssembly Include="System.Reflection.Metadata" />
-    <TrimmerRootAssembly Include="System.Reflection.Primitives" />
-    <TrimmerRootAssembly Include="System.Reflection.TypeExtensions" />
-    <TrimmerRootAssembly Include="System.Resources.Reader" />
-    <TrimmerRootAssembly Include="System.Resources.ResourceManager" />
-    <TrimmerRootAssembly Include="System.Resources.Writer" />
-    <TrimmerRootAssembly Include="System.Runtime.CompilerServices.Unsafe" />
-    <TrimmerRootAssembly Include="System.Runtime.CompilerServices.VisualC" />
-    <TrimmerRootAssembly Include="System.Runtime" />
-    <TrimmerRootAssembly Include="System.Runtime.Extensions" />
-    <TrimmerRootAssembly Include="System.Runtime.Handles" />
-    <TrimmerRootAssembly Include="System.Runtime.InteropServices" />
-    <TrimmerRootAssembly Include="System.Runtime.InteropServices.JavaScript" />
-    <TrimmerRootAssembly Include="System.Runtime.InteropServices.RuntimeInformation" />
-    <TrimmerRootAssembly Include="System.Runtime.Intrinsics" />
-    <TrimmerRootAssembly Include="System.Runtime.Loader" />
-    <TrimmerRootAssembly Include="System.Runtime.Numerics" />
-    <TrimmerRootAssembly Include="System.Runtime.Serialization" />
-    <TrimmerRootAssembly Include="System.Runtime.Serialization.Formatters" />
-    <TrimmerRootAssembly Include="System.Runtime.Serialization.Json" />
-    <TrimmerRootAssembly Include="System.Runtime.Serialization.Primitives" />
-    <TrimmerRootAssembly Include="System.Runtime.Serialization.Xml" />
-    <TrimmerRootAssembly Include="System.Security.AccessControl" />
-    <TrimmerRootAssembly Include="System.Security.Claims" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.Algorithms" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.Cng" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.Csp" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.Encoding" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.OpenSsl" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.Primitives" />
-    <TrimmerRootAssembly Include="System.Security.Cryptography.X509Certificates" />
-    <TrimmerRootAssembly Include="System.Security" />
-    <TrimmerRootAssembly Include="System.Security.Principal" />
-    <TrimmerRootAssembly Include="System.Security.Principal.Windows" />
-    <TrimmerRootAssembly Include="System.Security.SecureString" />
-    <TrimmerRootAssembly Include="System.ServiceModel.Web" />
-    <TrimmerRootAssembly Include="System.ServiceProcess" />
-    <TrimmerRootAssembly Include="System.Text.Encoding.CodePages" />
-    <TrimmerRootAssembly Include="System.Text.Encoding" />
-    <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
-    <TrimmerRootAssembly Include="System.Text.Encodings.Web" />
-    <TrimmerRootAssembly Include="System.Text.Json" />
-    <TrimmerRootAssembly Include="System.Text.RegularExpressions" />
-    <TrimmerRootAssembly Include="System.Threading.Channels" />
-    <TrimmerRootAssembly Include="System.Threading" />
-    <TrimmerRootAssembly Include="System.Threading.Overlapped" />
-    <TrimmerRootAssembly Include="System.Threading.Tasks.Dataflow" />
-    <TrimmerRootAssembly Include="System.Threading.Tasks" />
-    <TrimmerRootAssembly Include="System.Threading.Tasks.Extensions" />
-    <TrimmerRootAssembly Include="System.Threading.Tasks.Parallel" />
-    <TrimmerRootAssembly Include="System.Threading.Thread" />
-    <TrimmerRootAssembly Include="System.Threading.ThreadPool" />
-    <TrimmerRootAssembly Include="System.Threading.Timer" />
-    <TrimmerRootAssembly Include="System.Transactions" />
-    <TrimmerRootAssembly Include="System.Transactions.Local" />
-    <TrimmerRootAssembly Include="System.ValueTuple" />
-    <TrimmerRootAssembly Include="System.Web" />
-    <TrimmerRootAssembly Include="System.Web.HttpUtility" />
-    <TrimmerRootAssembly Include="System.Windows" />
-    <TrimmerRootAssembly Include="System.Xml" />
-    <TrimmerRootAssembly Include="System.Xml.Linq" />
-    <TrimmerRootAssembly Include="System.Xml.ReaderWriter" />
-    <TrimmerRootAssembly Include="System.Xml.Serialization" />
-    <TrimmerRootAssembly Include="System.Xml.XDocument" />
-    <TrimmerRootAssembly Include="System.Xml.XmlDocument" />
-    <TrimmerRootAssembly Include="System.Xml.XmlSerializer" />
-    <TrimmerRootAssembly Include="System.Xml.XPath" />
-    <TrimmerRootAssembly Include="System.Xml.XPath.XDocument" />
-    <TrimmerRootAssembly Include="Tmds.DBus.Protocol" />
-    <TrimmerRootAssembly Include="WindowsBase" />
-    -->
   </ItemGroup>
   
 </Project>
