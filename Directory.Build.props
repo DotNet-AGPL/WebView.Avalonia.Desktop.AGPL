@@ -1,7 +1,8 @@
 ﻿<Project>
 	<PropertyGroup>
 		<MiniVersionTargetFramework>netstandard2.1</MiniVersionTargetFramework>
-		<RepositoryDirectory>$(MSBuildThisFileDirectory)</RepositoryDirectory>
+		<RepositoryDirectory>$(SolutionDir)</RepositoryDirectory>
+    <RepositoryDirectory Condition=" '$(SolutionDir)' == '' ">$(ProjectDir)</RepositoryDirectory>
 		<BuildToolsDirectory>$(RepositoryDirectory)buildtools\</BuildToolsDirectory>
     <BaseIntermediateOutputPath>$(RepositoryDirectory)_output\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
 		<OutputPath>$(RepositoryDirectory)_output\$(MSBuildProjectName)\bin\</OutputPath>

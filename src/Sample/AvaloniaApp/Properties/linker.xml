@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+  <assembly fullname="*">
+    <type fullname="*" preserve="all" />
+  </assembly>
+  <!--
+  <assembly fullname="System.Private.CoreLib">
+    <type fullname="System.StubHelpers.InterfaceMarshaler" preserve="all">
+      <method name="ConvertToNative" preserve="all" />
+    </type>
+    <type fullname="System.StubHelpers.StubHelpers" preserve="all" />
+  </assembly>
+  <assembly fullname="System.Runtime.InteropServices">
+    <type fullname="*" preserve="all" />
+  </assembly>
+  <assembly fullname="Microsoft.Web.WebView2.Core">
+    <type fullname="Microsoft.Web.WebView2.Core.CoreWebView2Environment" preserve="all">
+      <method name="CreateAsync" preserve="all" />
+    </type>
+  </assembly>
+  <assembly fullname="Microsoft.Web.WebView2.WinForms">
+    <type fullname="*" preserve="all" />
+  </assembly>
+  <assembly fullname="Microsoft.Web.WebView2.Wpf">
+    <type fullname="*" preserve="all" />
+  </assembly>
+  -->
+</linker>
