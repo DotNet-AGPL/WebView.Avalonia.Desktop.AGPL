@@ -50,8 +50,6 @@ public class WebView2Control : Control, IDisposable
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.UnmanagedType))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.CharSet))]
     static WebView2Control(){
-        InitSwitch();
-
         logger.LogInformation("static WebView2Control()");
     }
 
