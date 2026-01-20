@@ -60,12 +60,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- 保留控件所在程序集 -->
     <TrimmerRootAssembly Include="$(AssemblyName)" />
-
-    <!-- 核心：引入自定义ILLink规则，强制保留COM互操作代码 -->
+<!--
     <LinkerDescriptor Include="Properties/linker.xml" />
     <None Update="Properties\linker.xml" CopyToOutputDirectory="PreserveNewest" />
+    -->
   </ItemGroup>
   
   <ItemGroup>
