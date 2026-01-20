@@ -32,24 +32,10 @@ public class WebView2Control : Control, IDisposable
     private bool _isInitialized;
     private bool _isDisposed;
     #endregion
-
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "WebView2 初始化已验证 AOT 兼容")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(CoreWebView2Controller))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(CoreWebView2Environment))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(CoreWebView2EnvironmentOptions))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "CoreWebView2EnvironCoreWebView2CreateCoreWebView2ControllerCompletedHandlermentOptions", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2Environment", "Microsoft.Web.WebView2.Core")]
-    //[DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2Environment", "Microsoft.Web.WebView2.Core.Raw")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2EnvironmentOptions", "Microsoft.Web.WebView2.Core")]
-    //[DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2EnvironmentOptions", "Microsoft.Web.WebView2.Core.Raw")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core")]
-    //[DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core.Raw")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.MarshalAsAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.InAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.OutAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.UnmanagedType))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.CharSet))]
+    
     static WebView2Control(){
+        typeof(WebView2Control).RegisterDependencyType();
+
         logger.LogInformation("static WebView2Control()");
     }
 
@@ -79,6 +65,7 @@ public class WebView2Control : Control, IDisposable
     #endregion
 
     #region 核心初始化逻辑（修正：Avalonia 11 正确获取Windows HWND）
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "WebView2 初始化已验证 AOT 兼容")]
     private async Task InitializeWebView2()
     {
         logger.LogInformation("InitializeWebView2()");
@@ -126,10 +113,6 @@ public class WebView2Control : Control, IDisposable
                 AppContext.TryGetSwitch(runtimeHost, out bool temp);
                 logger.LogInformation($"{runtimeHost}：{temp}");
             });
-
-            //Directory.GetFiles(AppContext.BaseDirectory, "")
-
-            //CoreWebView2Environment.SetLoaderDllFolderPath(AppDomain.CurrentDomain.BaseDirectory);
 
             //CoreWebView2Environment.LoadWebView2LoaderDll();
             typeof(CoreWebView2Environment).GetMethod("LoadWebView2LoaderDll", BindingFlags.Static | BindingFlags.NonPublic)?.Invoke(null, null);
@@ -190,6 +173,11 @@ public class WebView2Control : Control, IDisposable
     #endregion
 
     #region 资源释放
+    ~WebView2Control()
+    {
+        this.Dispose();
+    }
+
     public void Dispose()
     {
         if (_isDisposed) return;
@@ -201,40 +189,5 @@ public class WebView2Control : Control, IDisposable
     }
     #endregion
 
-    private static void InitSwitch() 
-    {
-        var runtimeHostConfigurationOptions = new List<string>
-        {
-            "Microsoft.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability",
-            "System.ComponentModel.DefaultValueAttribute.IsSupported",
-            "System.ComponentModel.Design.IDesignerHost.IsSupported",
-            "System.ComponentModel.TypeConverter.EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization",
-            "System.ComponentModel.TypeDescriptor.IsComObjectDescriptorSupported",
-            "System.Reflection.Metadata.MetadataUpdater.IsSupported",
-            "System.Resources.ResourceManager.AllowCustomResourceTypes",
-            "System.Resources.UseSystemResourceKeys",
-            "System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported",
-            "System.Runtime.InteropServices.BuiltInComInterop.IsSupported",
-            "System.Runtime.InteropServices.EnableConsumingManagedCodeFromNativeHosting",
-            "System.Runtime.InteropServices.EnableCppCLIHostActivation",
-            "System.Runtime.InteropServices.Marshalling.EnableGeneratedComInterfaceComImportInterop",
-            "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization",
-            "System.StartupHookProvider.IsSupported",
-            "System.Threading.Thread.EnableAutoreleasePool",
-            "System.Text.Encoding.EnableUnsafeUTF7Encoding",
-            "System.Text.Json.JsonSerializer.IsReflectionEnabledByDefault"
-        };
-        
-        foreach (var runtimeHost in runtimeHostConfigurationOptions) 
-        {
-            if (!AppContext.TryGetSwitch(runtimeHost, out bool isEnabled) || !isEnabled)
-            {
-                // 强制启用COM开关（运行时兜底）
-                AppContext.SetSwitch(runtimeHost, true);
-            }
-
-            AppContext.TryGetSwitch(runtimeHost, out bool temp);
-            logger.LogInformation($"{runtimeHost}：{temp}");
-        }
-    }
+    
 }
