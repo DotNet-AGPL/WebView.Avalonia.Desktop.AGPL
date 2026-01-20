@@ -11,10 +11,12 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <WebView2FixedVersionRuntimeDistribution>true</WebView2FixedVersionRuntimeDistribution>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <!--
     <TrimComInterop>false</TrimComInterop>
     <TrimMode>partial</TrimMode>
     <TrimInteropServices>false</TrimInteropServices>
     <ILLinkTrimAssemblyReferences>false</ILLinkTrimAssemblyReferences>
+    -->
   </PropertyGroup>
 
   <!--
