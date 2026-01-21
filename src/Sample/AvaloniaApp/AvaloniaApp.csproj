@@ -62,6 +62,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TrimmerRootAssembly Include="System.Threading.Tasks" />
+    <TrimmerRootAssembly Include="System.Private.Xml" />
+    <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- ProjectReference Include="..\..\WebView.Avalonia.Desktop\WebView.Avalonia.Desktop.csproj" / -->
   </ItemGroup>
   
