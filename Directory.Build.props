@@ -94,6 +94,13 @@
 				<DefineConstants>DEBUG;TRACE</DefineConstants>
 			</PropertyGroup>
 		</When>
+    <When Condition="'$(Configuration)' == 'Release'">
+      <PropertyGroup>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>none</DebugType>
+        <DisableUnmanagedSymbolGeneration>true</DisableUnmanagedSymbolGeneration>
+      </PropertyGroup>
+    </When>
 	</Choose>
 
 </Project>
