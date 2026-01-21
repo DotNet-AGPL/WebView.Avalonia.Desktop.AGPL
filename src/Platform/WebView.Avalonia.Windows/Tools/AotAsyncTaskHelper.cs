@@ -1,0 +1,62 @@
+﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
+using WebView.Avalonia.Windows.WebView;
+
+namespace WebView.Avalonia.Windows.Tools;
+
+/// <summary>
+/// AOT 异步任务执行助手
+/// 显式包装异步任务，避免“火与遗忘”导致的裁剪
+/// </summary>
+internal static class AotAsyncTaskTool
+{
+    /// <summary>
+    /// 安全执行异步方法（AOT 友好）
+    /// </summary>
+    /// <param name="asyncFunc">异步方法委托</param>
+    /// <param name="continueOnCapturedContext">是否延续捕获的上下文</param>
+    /// <param name="logger">logger</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void RunSafeAsync(Func<Task> asyncFunc, bool continueOnCapturedContext = false, ILogger<WebView2Control>? logger = default)
+    {
+        // 显式配置上下文，同时让修剪器识别到委托调用
+        _ = ExecuteAsync(asyncFunc, continueOnCapturedContext, logger);
+    }
+
+    /// <summary>
+    /// 带返回值的异步方法安全执行
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void RunSafeAsync<T>(Func<Task<T>> asyncFunc, bool continueOnCapturedContext = false, ILogger<WebView2Control>? logger = default)
+    {
+        _ = ExecuteAsync(asyncFunc, continueOnCapturedContext, logger);
+    }
+
+    // 内部执行方法，避免顶层异步方法警告
+    private static async Task ExecuteAsync(Func<Task> asyncFunc, bool continueOnCapturedContext, ILogger<WebView2Control>? logger = default)
+    {
+        try
+        {
+            await asyncFunc().ConfigureAwait(continueOnCapturedContext);
+        }
+        catch (Exception ex)
+        {
+            // 可自定义异常日志逻辑
+            logger?.LogError($"AOT RunSafeAsync is fail: {ex.Message}；{ex.StackTrace}");
+        }
+    }
+
+    private static async Task<T> ExecuteAsync<T>(Func<Task<T>> asyncFunc, bool continueOnCapturedContext, ILogger<WebView2Control>? logger = default)
+    {
+        try
+        {
+            return await asyncFunc().ConfigureAwait(continueOnCapturedContext);
+        }
+        catch (Exception ex)
+        {
+            logger?.LogError($"AOT RunSafeAsync is fail: {ex.Message}；{ex.StackTrace}");
+
+            return default!;
+        }
+    }
+}

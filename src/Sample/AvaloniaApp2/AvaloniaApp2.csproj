@@ -4,7 +4,12 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ILLinkTrimAssemblyReferences>false</ILLinkTrimAssemblyReferences>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <TrimEnableCompilationRelaxations>true</TrimEnableCompilationRelaxations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +22,27 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Platform\WebView.Avalonia.Windows\WebView.Avalonia.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="WebView.Avalonia.Windows" />
+    <TrimmerRootAssembly Include="Avalonia" />
+    <TrimmerRootAssembly Include="System.Private.CoreLib" />
+    <TrimmerRootAssembly Include="System.Runtime.InteropServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <TrimmerRootAssembly Include="System.Runtime.Numerics" />
+    <TrimmerRootAssembly Include="System.Runtime.Extensions" />
+    <TrimmerRootAssembly Include="System.Net.Sockets" />
+    <TrimmerRootAssembly Include="System.Net.Primitives" />
+  </ItemGroup>
+  <ItemGroup>
+    <TrimmerRootAssembly Include="System.Threading.Tasks" />
+    <TrimmerRootAssembly Include="System.Private.Xml" />
+    <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
   </ItemGroup>
 </Project>

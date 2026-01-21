@@ -7,6 +7,8 @@ namespace AvaloniaApp2
         public MainWindow()
         {
             InitializeComponent();
+
+            //webview2.Url
         }
     }
 }
