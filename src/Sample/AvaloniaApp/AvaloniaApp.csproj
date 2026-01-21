@@ -39,10 +39,13 @@
 
   <!-- 排除WebView2相关程序集的裁剪（核心） -->
   <ItemGroup>
+    
     <TrimmerRootAssembly Include="$(AssemblyName)" />
+    <!--
     <TrimmerRootAssembly Include="Avalonia" />
     <TrimmerRootAssembly Include="Avalonia.*" />
     <TrimmerRootAssembly Include="Avalonia.*.*" />
+    -->
     <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
     <!--
     <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Wpf" />
