@@ -1,22 +1,34 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
+using Microsoft.Extensions.Logging;
+using WebView.Avalonia.Windows.Tools;
 
-namespace AvaloniaApp2
+namespace AvaloniaApp2;
+
+internal class Program
 {
-    internal class Program
-    {
-        // Initialization code. Don't use any Avalonia, third-party APIs or any
-        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-        // yet and stuff might break.
-        [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+    private static ILogger<Program> logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<Program>();
 
-        // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .WithInterFont()
-                .LogToTrace();
+    // Initialization code. Don't use any Avalonia, third-party APIs or any
+    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+    // yet and stuff might break.
+    [STAThread]
+    public static void Main(string[] args) 
+    {
+        try 
+        {
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        }
+        catch (Exception ex)
+        {
+            logger.LogInformation(ex.Message);
+            logger.LogInformation(ex.StackTrace);
+        }
     }
+
+    // Avalonia configuration, don't remove; also used by visual designer.
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace();
 }
