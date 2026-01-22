@@ -4,8 +4,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <DesignTimeBuild Condition="'$(DesignTimeBuild)' == 'true'">true</DesignTimeBuild>
   </PropertyGroup>
-
+  
   <PropertyGroup>
     <ILLinkTrimAssemblyReferences>false</ILLinkTrimAssemblyReferences>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -44,5 +45,10 @@
     <TrimmerRootAssembly Include="System.Threading.Tasks" />
     <TrimmerRootAssembly Include="System.Private.Xml" />
     <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="$(AssemblyName)" />
+    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
   </ItemGroup>
 </Project>
