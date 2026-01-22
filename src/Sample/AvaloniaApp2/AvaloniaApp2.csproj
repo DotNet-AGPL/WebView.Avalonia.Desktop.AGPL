@@ -11,6 +11,9 @@
     <ILLinkTrimAssemblyReferences>false</ILLinkTrimAssemblyReferences>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <TrimEnableCompilationRelaxations>true</TrimEnableCompilationRelaxations>
+    <!--
+    <EnableSourceGeneratorsInTrimmedPublish>true</EnableSourceGeneratorsInTrimmedPublish>
+    -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +34,11 @@
 
   <ItemGroup>
     <TrimmerRootAssembly Include="WebView.Avalonia.Windows" />
+    <!--
+    <TrimmerIncludeDependencies Include="WebView.Avalonia.Windows" />
+    -->
+    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
+    <!--
     <TrimmerRootAssembly Include="Avalonia" />
     <TrimmerRootAssembly Include="System.Private.CoreLib" />
     <TrimmerRootAssembly Include="System.Runtime.InteropServices" />
@@ -45,10 +53,6 @@
     <TrimmerRootAssembly Include="System.Threading.Tasks" />
     <TrimmerRootAssembly Include="System.Private.Xml" />
     <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TrimmerRootAssembly Include="$(AssemblyName)" />
-    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
+    -->
   </ItemGroup>
 </Project>
