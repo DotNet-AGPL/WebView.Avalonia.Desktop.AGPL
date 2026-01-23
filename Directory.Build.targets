@@ -3,7 +3,7 @@
 <Project>
 	<!-- Import Project="$(BuildToolsDirectory)Directory.build.common.targets" / -->
   
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0' ">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0' ">
 		<DefineConstants>NETSTANDARD2_1_OR_GREATER</DefineConstants>
 	</PropertyGroup>
 

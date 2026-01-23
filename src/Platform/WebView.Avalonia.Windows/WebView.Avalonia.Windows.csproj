@@ -24,7 +24,7 @@
     <TrimmerRootAssembly Include="$(AssemblyName)" />
     <TrimmerRootAssembly Include="Avalonia" />
     <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
-    <TrimmerRootAssembly Include="System.Private.CoreLib" />
+    <!--<TrimmerRootAssembly Include="System.Private.CoreLib" />-->
     <TrimmerRootAssembly Include="System.Runtime.InteropServices" />
   </ItemGroup>
   <ItemGroup>
