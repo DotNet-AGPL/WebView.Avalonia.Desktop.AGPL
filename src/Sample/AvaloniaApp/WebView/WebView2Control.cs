@@ -39,14 +39,17 @@ public class WebView2Control : Control, IDisposable
         logger.LogInformation("static WebView2Control()");
     }
 
+    public static bool IsSupported() => WebView2Extension.IsWindowsJIT();
+
     #region 生命周期事件
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         logger.LogInformation("WebView2Control.OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)");
 
         base.OnAttachedToVisualTree(e);
-        // 仅在Windows平台执行初始化
-        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+
+        // 仅在Windows平台JIT模式下执行初始化
+        if (IsSupported())
         {
             logger.LogInformation("AotAsyncTaskHelper.RunSafeAsync(InitializeWebView2, continueOnCapturedContext: true)");
 
@@ -70,9 +73,9 @@ public class WebView2Control : Control, IDisposable
     {
         logger.LogInformation("InitializeWebView2()");
 
-        if (_isInitialized || _isDisposed || !System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+        if (_isInitialized || _isDisposed || !IsSupported())
         {
-            logger.LogInformation($"(_isInitialized || _isDisposed || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows)), return");
+            logger.LogInformation($"(_isInitialized || _isDisposed || !IsSupported()), return");
 
             return;
         }
