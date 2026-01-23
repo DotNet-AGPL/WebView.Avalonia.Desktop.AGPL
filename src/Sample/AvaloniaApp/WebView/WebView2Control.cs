@@ -34,6 +34,11 @@ public class WebView2Control : Control, IDisposable
     #endregion
     
     static WebView2Control(){
+        if (Design.IsDesignMode) 
+        {
+            return;
+        }
+
         typeof(WebView2Control).RegisterDependencyType();
 
         logger.LogInformation("static WebView2Control()");
@@ -44,9 +49,14 @@ public class WebView2Control : Control, IDisposable
     #region 生命周期事件
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
-        logger.LogInformation("WebView2Control.OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)");
-
         base.OnAttachedToVisualTree(e);
+
+        if (Design.IsDesignMode)
+        {
+            return;
+        }
+
+        logger.LogInformation("WebView2Control.OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)");
 
         // 仅在Windows平台JIT模式下执行初始化
         if (IsSupported())
@@ -60,6 +70,12 @@ public class WebView2Control : Control, IDisposable
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+
+        if (Design.IsDesignMode)
+        {
+            return;
+        }
+
         if (change.Property == UrlProperty && _isInitialized && !string.IsNullOrEmpty(Url))
         {
             _controller?.CoreWebView2?.Navigate(Url);
@@ -168,6 +184,12 @@ public class WebView2Control : Control, IDisposable
     protected override void OnSizeChanged(SizeChangedEventArgs e)
     {
         base.OnSizeChanged(e);
+
+        if (Design.IsDesignMode)
+        {
+            return;
+        }
+
         if (_controller != null && _isInitialized)
         {
             _controller.ResetWebViewSize(this);
@@ -191,6 +213,4 @@ public class WebView2Control : Control, IDisposable
         _isDisposed = true;
     }
     #endregion
-
-    
 }
