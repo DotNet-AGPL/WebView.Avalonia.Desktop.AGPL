@@ -20,14 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    
-  </ItemGroup>
-  
-  <!--
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Web.WebView2" />
     <TrimmerRootAssembly Include="$(AssemblyName)" />
-    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
     <TrimmerRootAssembly Include="System.Runtime.InteropServices" />
     <TrimmerRootAssembly Include="System.Runtime.Numerics" />
     <TrimmerRootAssembly Include="System.Runtime.Extensions" />
@@ -36,6 +29,12 @@
     <TrimmerRootAssembly Include="System.Threading.Tasks" />
     <TrimmerRootAssembly Include="System.Private.Xml" />
     <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
+  </ItemGroup>
+  
+  <!--
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" />
+    <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
   </ItemGroup>
   -->
 </Project>
