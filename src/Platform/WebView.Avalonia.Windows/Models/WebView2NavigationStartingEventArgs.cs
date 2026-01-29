@@ -1,8 +1,10 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Web.WebView2.Core;
 using WebView.Avalonia.Core.Models;
 
 namespace WebView.Avalonia.Windows.Models;
 
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 internal class WebView2NavigationStartingEventArgs : WebViewNavigationStartingEventArgs
 {
     private CoreWebView2NavigationStartingEventArgs eventArgs;

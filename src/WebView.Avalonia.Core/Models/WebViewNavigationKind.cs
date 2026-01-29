@@ -1,4 +1,6 @@
-﻿namespace WebView.Avalonia.Core.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace WebView.Avalonia.Core.Models;
 
 public enum WebViewNavigationKind
 {

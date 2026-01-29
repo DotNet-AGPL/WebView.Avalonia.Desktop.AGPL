@@ -1,5 +1,8 @@
-﻿namespace WebView.Avalonia.Core.Models;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace WebView.Avalonia.Core.Models;
+
+[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 public abstract class WebViewNavigationStartingEventArgs
 {
     public abstract bool Cancel { get; set; }

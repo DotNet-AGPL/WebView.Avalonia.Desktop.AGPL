@@ -17,6 +17,8 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
     
     public override event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
 
+    public override event EventHandler<WebViewNavigationCompletedEventArgs>? NavigationCompleted;
+
     #region Field
     private CoreWebView2Controller? _controller;
     private bool _isInitialized;
@@ -34,6 +36,7 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         logger.LogInformation("static WebView2Control()");
     }
 
+    #region Init
     protected override void OnLoadWebView()
     {
         // 仅在Windows-JIT执行初始化
@@ -45,29 +48,6 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         }
     }
 
-    #region Event
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (Design.IsDesignMode)
-        {
-            return;
-        }
-        
-        if (!_isInitialized) 
-        {
-            return;
-        }
-
-        if (change.Property == WebView.Avalonia.Core.WebView.UrlProperty)
-        {
-            _controller?.CoreWebView2?.Navigate(change.NewValue as string);
-        }
-    }
-    #endregion
-
-    #region Init
     //[UnconditionalSuppressMessage("AOT", "IL3050", Justification = "WebView2 初始化已验证 AOT 兼容")]
     private async Task LoadWebView2(Control? obj)
     {
@@ -122,7 +102,8 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
             // 同步控件尺寸
             _controller.ResetWebViewSize(obj);
 
-            _controller.CoreWebView2.NavigationStarting += NavigationStartingAction;
+            _controller.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+            _controller.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
 
             _isInitialized = true;
 
@@ -145,15 +126,22 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         }
     }
 
-    private void NavigationStartingAction(object? sender, CoreWebView2NavigationStartingEventArgs e)
+    private void CoreWebView2_NavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
     {
         logger.LogError("NavigationStartingAction： " + e.ToString());
 
         NavigationStarting?.Invoke(this, new WebView2NavigationStartingEventArgs(e));
     }
+    
+    private void CoreWebView2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
+    {
+        logger.LogError("NavigationCompleted： " + e.ToString());
+
+        NavigationCompleted?.Invoke(this, new WebView2NavigationCompletedEventArgs(e));
+    }
     #endregion
 
-    #region OnSizeChanged
+    #region Event
     protected override void OnSizeChanged(SizeChangedEventArgs e)
     {
         if (Design.IsDesignMode)
@@ -165,6 +153,33 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         {
             _controller.ResetWebViewSize(this.WebViewInstance);
         }
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (Design.IsDesignMode)
+        {
+            return;
+        }
+
+        if (!_isInitialized)
+        {
+            return;
+        }
+
+        if (change.Property == WebView.Avalonia.Core.WebView.UrlProperty)
+        {
+            _controller?.CoreWebView2?.Navigate(change.NewValue as string);
+        }
+    }
+    #endregion
+
+    #region Function
+    public override void Reload() 
+    {
+        _controller?.CoreWebView2?.Reload();
     }
     #endregion
 

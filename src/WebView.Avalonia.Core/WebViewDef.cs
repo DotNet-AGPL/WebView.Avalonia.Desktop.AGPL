@@ -10,6 +10,8 @@ public abstract class WebViewDef : IDisposable
 {
     public virtual event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
 
+    public virtual event EventHandler<WebViewNavigationCompletedEventArgs>? NavigationCompleted;
+
     private protected WebView? webviewInstance;
 
     internal void SetControl(WebView webviewInstance) 
@@ -20,6 +22,8 @@ public abstract class WebViewDef : IDisposable
     internal protected WebView? WebViewInstance => webviewInstance;
 
     public virtual void Dispose() { }
+
+    public virtual void Reload() { }
 
     internal protected virtual void OnLoadWebView() { }
 
