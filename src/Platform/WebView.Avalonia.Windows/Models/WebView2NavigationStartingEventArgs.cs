@@ -1,21 +1,28 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using WebView.Avalonia.Core.Models;
 
-namespace WebView.Avalonia.Windows.EventArg;
+namespace WebView.Avalonia.Windows.Models;
 
-internal class WebView2NavigationStartingEventArgs : NavigationStartingEventArgs
+internal class WebView2NavigationStartingEventArgs : WebViewNavigationStartingEventArgs
 {
     private CoreWebView2NavigationStartingEventArgs eventArgs;
 
-    private HttpRequestHeaders requestHeaders;
-    private NavigationKind navigationKind;
+    private WebViewHttpRequestHeaders requestHeaders;
+    private WebViewNavigationKind navigationKind;
 
     internal WebView2NavigationStartingEventArgs(CoreWebView2NavigationStartingEventArgs eventArgs)
     {
         this.eventArgs = eventArgs;
 
-        this.requestHeaders = Convert(eventArgs.RequestHeaders);
-        this.navigationKind = Convert(eventArgs.NavigationKind);
+        this.requestHeaders = new WebView2HttpRequestHeaders(eventArgs.RequestHeaders);
+
+        this.navigationKind = eventArgs.NavigationKind switch
+        {
+            CoreWebView2NavigationKind.Reload => WebViewNavigationKind.Reload,
+            CoreWebView2NavigationKind.BackOrForward => WebViewNavigationKind.BackOrForward,
+            CoreWebView2NavigationKind.NewDocument => WebViewNavigationKind.NewDocument,
+            _ => default
+        };
     }
 
     public override bool Cancel
@@ -36,7 +43,7 @@ internal class WebView2NavigationStartingEventArgs : NavigationStartingEventArgs
 
     public override ulong NavigationId => eventArgs.NavigationId;
 
-    public override HttpRequestHeaders RequestHeaders => requestHeaders;
+    public override WebViewHttpRequestHeaders RequestHeaders => requestHeaders;
     
     public override string Uri => eventArgs.Uri;
 
@@ -52,19 +59,5 @@ internal class WebView2NavigationStartingEventArgs : NavigationStartingEventArgs
         }
     }
 
-    public override NavigationKind NavigationKind => navigationKind;
-
-    private static HttpRequestHeaders Convert(CoreWebView2HttpRequestHeaders coreWebView2HttpRequestHeaders) 
-    {
-        var requestHeaders = new HttpRequestHeaders();
-
-        return requestHeaders;
-    }
-
-    private static NavigationKind Convert(CoreWebView2NavigationKind coreWebView2NavigationKind)
-    {
-        var navigationKind = new NavigationKind();
-
-        return navigationKind;
-    }
+    public override WebViewNavigationKind NavigationKind => navigationKind;
 }

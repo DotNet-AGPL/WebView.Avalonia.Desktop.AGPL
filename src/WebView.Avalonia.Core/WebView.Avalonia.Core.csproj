@@ -9,5 +9,10 @@
     <PackageReference Include="Avalonia" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+  </ItemGroup>
+
   <Import Project="$(RepositoryDirectory)Directory.Packages.targets" />
 </Project>

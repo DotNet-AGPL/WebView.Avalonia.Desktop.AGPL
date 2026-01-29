@@ -11,30 +11,19 @@ using WebView.Avalonia.Windows.Tools;
 namespace WebView.Avalonia.Windows.WebView2;
 
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-public class WebView2Control : Control, IDisposable
+public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
 {
-    private static ILogger<WebView2Control> logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<WebView2Control>();
+    private static ILogger logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<WebView2Control>();
     
-    public event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
-
-    #region UrlProperty
-    internal static readonly StyledProperty<string?> UrlProperty = AvaloniaProperty.Register<WebView2Control, string?>(nameof(Url));
-
-    public string? Url
-    {
-        get => GetValue(UrlProperty);
-        set => SetValue(UrlProperty, value);
-    }
-    #endregion
+    public override event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
 
     #region Field
     private CoreWebView2Controller? _controller;
-    //private CoreWebView2Environment? _environment;
     private bool _isInitialized;
     private bool _isDisposed;
     #endregion
     
-    static WebView2Control(){
+    static WebViewImp(){
         if (Design.IsDesignMode) 
         {
             return;
@@ -45,27 +34,18 @@ public class WebView2Control : Control, IDisposable
         logger.LogInformation("static WebView2Control()");
     }
 
-    #region Event
-    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    protected override void OnLoadWebView()
     {
-        base.OnAttachedToVisualTree(e);
-
-        if (Design.IsDesignMode)
-        {
-            return;
-        }
-
-        logger.LogInformation("WebView2Control.OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)");
-
         // 仅在Windows-JIT执行初始化
         if (WebView2Extension.IsWindowsJIT())
         {
             logger.LogInformation("AotAsyncTaskHelper.RunSafeAsync(LoadWebView2, continueOnCapturedContext: true)");
 
-            AotAsyncTaskTool.RunSafeAsync(LoadWebView2, this, continueOnCapturedContext: true);
+            AotAsyncTaskTool.RunSafeAsync(LoadWebView2, this.WebViewInstance, continueOnCapturedContext: true);
         }
     }
 
+    #region Event
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
@@ -74,19 +54,17 @@ public class WebView2Control : Control, IDisposable
         {
             return;
         }
-
-        if (!IsInitialized) 
+        
+        if (!_isInitialized) 
         {
             return;
         }
 
-
-        if (change.Property == UrlProperty)
+        if (change.Property == WebView.Avalonia.Core.WebView.UrlProperty)
         {
-            _controller?.CoreWebView2?.Navigate(Url);
+            _controller?.CoreWebView2?.Navigate(change.NewValue as string);
         }
     }
-
     #endregion
 
     #region Init
@@ -146,13 +124,18 @@ public class WebView2Control : Control, IDisposable
 
             _controller.CoreWebView2.NavigationStarting += NavigationStartingAction;
 
-            // 加载初始网址
-            if (!string.IsNullOrEmpty(Url))
-            {
-                logger.LogInformation($"_controller.CoreWebView2.Navigate(Url): {Url}");
+            _isInitialized = true;
 
-                _controller.CoreWebView2.Navigate(Url);
+            var url = this.WebViewInstance?.Url;
+
+            // 加载初始网址
+            if (!string.IsNullOrEmpty(url))
+            {
+                logger.LogInformation($"_controller.CoreWebView2.Navigate(Url): {url}");
+
+                _controller.CoreWebView2.Navigate(url);
             }
+            
         }
         catch (Exception ex)
         {
@@ -160,8 +143,6 @@ public class WebView2Control : Control, IDisposable
 
             _isInitialized = false;
         }
-
-        _isInitialized = true;
     }
 
     private void NavigationStartingAction(object? sender, CoreWebView2NavigationStartingEventArgs e)
@@ -175,8 +156,6 @@ public class WebView2Control : Control, IDisposable
     #region OnSizeChanged
     protected override void OnSizeChanged(SizeChangedEventArgs e)
     {
-        base.OnSizeChanged(e);
-
         if (Design.IsDesignMode)
         {
             return;
@@ -184,23 +163,22 @@ public class WebView2Control : Control, IDisposable
 
         if (_controller != null && _isInitialized)
         {
-            _controller.ResetWebViewSize(this);
+            _controller.ResetWebViewSize(this.WebViewInstance);
         }
     }
     #endregion
 
     #region Dispose
-    ~WebView2Control()
+    ~WebViewImp()
     {
         this.Dispose();
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
         if (_isDisposed) return;
 
-        _controller?.Close();//.Dispose();
-        //_environment = null;
+        _controller?.Close();
         _controller = null;
         _isDisposed = true;
     }

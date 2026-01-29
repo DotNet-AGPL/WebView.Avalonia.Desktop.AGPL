@@ -8,7 +8,14 @@ namespace AvaloniaApp2
         {
             InitializeComponent();
 
-            //webview2.Url
+            webview2.NavigationStarting += Webview2_NavigationStarting;
+
+            webview2.Url = "https://docs.avaloniaui.net/zh-Hans/docs/welcome";
+        }
+
+        private void Webview2_NavigationStarting(object? sender, WebView.Avalonia.Core.Models.WebViewNavigationStartingEventArgs e)
+        {
+            e.Cancel = false;
         }
     }
 }

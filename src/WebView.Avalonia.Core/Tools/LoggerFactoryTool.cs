@@ -3,11 +3,11 @@ namespace WebView.Avalonia.Windows.Tools;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
-public static class LoggerFactoryTool1
+public static class LoggerFactoryTool
 {
     private static readonly ILoggerFactory loggerFactory;
 
-    static LoggerFactoryTool1() {
+    static LoggerFactoryTool() {
         // 1. 配置 Serilog（定义日志输出目标、级别、格式等）
         var serilogLogger = new LoggerConfiguration()
             .MinimumLevel.Information() // 全局最小日志级别

@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Microsoft.Extensions.Logging;
+using WebView.Avalonia.Windows;
 using WebView.Avalonia.Windows.Tools;
 
 namespace AvaloniaApp2;
@@ -30,5 +31,6 @@ internal class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace();
+            .LogToTrace()
+            .UseWebView2();
 }

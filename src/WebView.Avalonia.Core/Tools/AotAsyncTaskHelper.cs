@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
-using WebView.Avalonia.Windows.WebView2;
 
 namespace WebView.Avalonia.Windows.Tools;
 
@@ -18,7 +17,7 @@ internal static class AotAsyncTaskTool
     /// <param name="continueOnCapturedContext">是否延续捕获的上下文</param>
     /// <param name="logger">logger</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void RunSafeAsync<T>(Func<T?, Task> asyncFunc, T? obj, bool continueOnCapturedContext = false, ILogger<WebView2Control>? logger = default)
+    public static void RunSafeAsync<T>(Func<T, Task> asyncFunc, T obj, bool continueOnCapturedContext = false, ILogger? logger = default)
     {
         // 显式配置上下文，同时让修剪器识别到委托调用
         _ = ExecuteAsync(asyncFunc, obj, continueOnCapturedContext, logger);
@@ -28,13 +27,13 @@ internal static class AotAsyncTaskTool
     /// 带返回值的异步方法安全执行
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void RunSafeAsync<T>(Func<Task<T>> asyncFunc, bool continueOnCapturedContext = false, ILogger<WebView2Control>? logger = default)
+    public static void RunSafeAsync<T>(Func<Task<T>> asyncFunc, bool continueOnCapturedContext = false, ILogger? logger = default)
     {
         _ = ExecuteAsync(asyncFunc, continueOnCapturedContext, logger);
     }
 
     // 内部执行方法，避免顶层异步方法警告
-    private static async Task ExecuteAsync<T>(Func<T?, Task> asyncFunc, T? obj, bool continueOnCapturedContext, ILogger<WebView2Control>? logger = default)
+    private static async Task ExecuteAsync<T>(Func<T, Task> asyncFunc, T obj, bool continueOnCapturedContext, ILogger? logger = default)
     {
         try
         {
@@ -47,7 +46,7 @@ internal static class AotAsyncTaskTool
         }
     }
 
-    private static async Task<T> ExecuteAsync<T>(Func<Task<T>> asyncFunc, bool continueOnCapturedContext, ILogger<WebView2Control>? logger = default)
+    private static async Task<T> ExecuteAsync<T>(Func<Task<T>> asyncFunc, bool continueOnCapturedContext, ILogger? logger = default)
     {
         try
         {
