@@ -12,12 +12,16 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" />
-    <PackageReference Include="Microsoft.Web.WebView2" />
+    <PackageReference Include="Microsoft.Web.WebView2" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Serilog.Sinks.File" />
     <PackageReference Include="Serilog.Extensions.Logging" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebView.Avalonia.Core\WebView.Avalonia.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

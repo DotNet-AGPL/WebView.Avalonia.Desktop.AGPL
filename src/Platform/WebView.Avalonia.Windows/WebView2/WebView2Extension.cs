@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
 
-namespace WebView.Avalonia.Windows.WebView;
+namespace WebView.Avalonia.Windows.WebView2;
 
 internal static class WebView2Extension
 {
@@ -20,10 +20,8 @@ internal static class WebView2Extension
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Microsoft.Web.WebView2.Core.CoreWebView2Controller))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Microsoft.Web.WebView2.Core.CoreWebView2Environment))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Microsoft.Web.WebView2.Core.CoreWebView2EnvironmentOptions))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "CoreWebView2EnvironCoreWebView2CreateCoreWebView2ControllerCompletedHandlermentOptions", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2Environment", "Microsoft.Web.WebView2.Core")]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.CoreWebView2EnvironCoreWebView2CreateCoreWebView2ControllerCompletedHandlermentOptions", "Microsoft.Web.WebView2.Core")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Environment", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "ICoreWebView2EnvironmentOptions", "Microsoft.Web.WebView2.Core")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2EnvironmentOptions", "Microsoft.Web.WebView2.Core")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core")]
@@ -33,6 +31,27 @@ internal static class WebView2Extension
 
         return obj;
     }
+
+    public static Type SetLoaderDllFolderPath(this Type obj)
+    {
+        var winArch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture switch
+        {
+            System.Runtime.InteropServices.Architecture.X86 => "win-x86",
+            System.Runtime.InteropServices.Architecture.X64 => "win-x64",
+            System.Runtime.InteropServices.Architecture.Arm64 => "win-arm64",
+            _ => ""
+        };
+
+        if (!string.IsNullOrEmpty(winArch))
+        {
+            var loaderDllFolderPath = Path.Combine(AppContext.BaseDirectory, "runtimes", winArch, "native");
+
+            Microsoft.Web.WebView2.Core.CoreWebView2Environment.SetLoaderDllFolderPath(loaderDllFolderPath);
+        }
+
+        return obj;
+    }
+
 
     public static void ResetWebViewSize(this Microsoft.Web.WebView2.Core.CoreWebView2Controller coreWebView2Controller, Control control)
     {

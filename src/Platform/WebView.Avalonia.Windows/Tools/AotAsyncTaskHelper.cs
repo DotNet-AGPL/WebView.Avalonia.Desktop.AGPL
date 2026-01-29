@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
-using WebView.Avalonia.Windows.WebView;
+using WebView.Avalonia.Windows.WebView2;
 
 namespace WebView.Avalonia.Windows.Tools;
 

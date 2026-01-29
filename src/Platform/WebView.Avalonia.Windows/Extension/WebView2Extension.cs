@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Core;
-using WebView.Avalonia.Windows.WebView;
+using WebView.Avalonia.Windows.WebView2;
 
 namespace WebView.Avalonia.Windows.Extension
 {

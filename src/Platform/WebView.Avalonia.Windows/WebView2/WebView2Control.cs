@@ -3,17 +3,21 @@ using Avalonia;
 using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.WebView2.Core;
+using WebView.Avalonia.Core.Models;
+using WebView.Avalonia.Windows.EventArg;
 using WebView.Avalonia.Windows.Tools;
 
-namespace WebView.Avalonia.Windows.WebView;
+namespace WebView.Avalonia.Windows.WebView2;
 
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-public class WebView2Control : Control, IDisposable
+public class WebView2Control : WebView.Avalonia.Core.WebView, IDisposable
 {
     private static ILogger<WebView2Control> logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<WebView2Control>();
+    
+    public override event EventHandler<NavigationStartingEventArgs>? NavigationStarting;
 
     #region UrlProperty
-    public static readonly StyledProperty<string?> UrlProperty = AvaloniaProperty.Register<WebView2Control, string?>(nameof(Url));
+    internal static readonly StyledProperty<string?> UrlProperty = AvaloniaProperty.Register<WebView2Control, string?>(nameof(Url));
 
     public string? Url
     {
@@ -24,7 +28,7 @@ public class WebView2Control : Control, IDisposable
 
     #region Field
     private CoreWebView2Controller? _controller;
-    private CoreWebView2Environment? _environment;
+    //private CoreWebView2Environment? _environment;
     private bool _isInitialized;
     private bool _isDisposed;
     #endregion
@@ -35,7 +39,7 @@ public class WebView2Control : Control, IDisposable
             return;
         }
 
-        typeof(WebView2Control).RegisterDependencyType();
+        typeof(WebView2Control).RegisterDependencyType().SetLoaderDllFolderPath();
 
         logger.LogInformation("static WebView2Control()");
     }
@@ -52,12 +56,12 @@ public class WebView2Control : Control, IDisposable
 
         logger.LogInformation("WebView2Control.OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)");
 
-        // 仅在Windows平台执行初始化
-        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+        // 仅在Windows-JIT执行初始化
+        if (WebView2Extension.IsWindowsJIT())
         {
-            logger.LogInformation("AotAsyncTaskHelper.RunSafeAsync(InitializeWebView2, continueOnCapturedContext: true)");
+            logger.LogInformation("AotAsyncTaskHelper.RunSafeAsync(LoadWebView2, continueOnCapturedContext: true)");
 
-            AotAsyncTaskTool.RunSafeAsync(InitializeWebView2, continueOnCapturedContext: true);
+            AotAsyncTaskTool.RunSafeAsync(LoadWebView2, continueOnCapturedContext: true);
         }
     }
 
@@ -70,22 +74,30 @@ public class WebView2Control : Control, IDisposable
             return;
         }
 
-        if (change.Property == UrlProperty && _isInitialized && !string.IsNullOrEmpty(Url))
+        if (!IsInitialized) 
+        {
+            return;
+        }
+
+
+        if (change.Property == UrlProperty)
         {
             _controller?.CoreWebView2?.Navigate(Url);
         }
     }
+
+    
     #endregion
 
     #region Init
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "WebView2 初始化已验证 AOT 兼容")]
-    private async Task InitializeWebView2()
+    //[UnconditionalSuppressMessage("AOT", "IL3050", Justification = "WebView2 初始化已验证 AOT 兼容")]
+    private async Task LoadWebView2()
     {
         logger.LogInformation("InitializeWebView2()");
 
-        if (_isInitialized || _isDisposed || !System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+        if (_isInitialized || _isDisposed || !WebView2Extension.IsWindowsJIT())
         {
-            logger.LogInformation($"(_isInitialized || _isDisposed || !RuntimeInformation.IsOSPlatform(OSPlatform.Windows)), return");
+            logger.LogInformation($"(_isInitialized || _isDisposed || !WebView2Extension.IsWindowsJIT()");
 
             return;
         }
@@ -112,13 +124,13 @@ public class WebView2Control : Control, IDisposable
 
             logger.LogError("InitializeWebView2：CoreWebView2Environment.CreateAsync");
             // 创建WebView2环境
-            string userDataFolder = Path.Combine(AppContext.BaseDirectory, "webview_data");
+            var userDataFolder = Path.Combine(AppContext.BaseDirectory, "webview_data");
             var options = new CoreWebView2EnvironmentOptions();
-            _environment = await CoreWebView2Environment.CreateAsync(browserExecutableFolder: default, userDataFolder: userDataFolder, options: options);
+            var environment = await CoreWebView2Environment.CreateAsync(browserExecutableFolder: default, userDataFolder: userDataFolder, options: options);
 
             logger.LogError("InitializeWebView2：_environment.CreateCoreWebView2ControllerAsync");
             // 创建CoreWebView2Controller并绑定句柄
-            _controller = await _environment.CreateCoreWebView2ControllerAsync(hwnd);
+            _controller = await environment.CreateCoreWebView2ControllerAsync(hwnd);
             if (_controller?.CoreWebView2 == null)
             {
                 throw new NullReferenceException("CoreWebView2实例创建失败");
@@ -129,12 +141,10 @@ public class WebView2Control : Control, IDisposable
             // 配置WebView2基础设置
             _controller.CoreWebView2.Settings.IsScriptEnabled = true;
 
-            logger.LogInformation($"_controller.ResetWebViewSize(this), before");
-
             // 同步控件尺寸
             _controller.ResetWebViewSize(this);
 
-            logger.LogInformation($"_controller.ResetWebViewSize(this), after");
+            _controller.CoreWebView2.NavigationStarting += NavigationStartingAction;
 
             // 加载初始网址
             if (!string.IsNullOrEmpty(Url))
@@ -143,18 +153,27 @@ public class WebView2Control : Control, IDisposable
 
                 _controller.CoreWebView2.Navigate(Url);
             }
-
-            _isInitialized = true;
         }
         catch (Exception ex)
         {
             logger.LogInformation($"WebView2 初始化失败: {ex.Message},{ex.StackTrace}");
 
-            Console.WriteLine($"WebView2 初始化失败: {ex.Message}");
-
             _isInitialized = false;
         }
+
+        _isInitialized = true;
     }
+
+    private void NavigationStartingAction(object? sender, CoreWebView2NavigationStartingEventArgs e)
+    {
+        //e.NavigationKind
+
+        logger.LogError("NavigationStartingAction： " + e.ToString());
+
+        NavigationStarting?.Invoke(this, new WebView2NavigationStartingEventArgs(e));
+    }
+
+
     #endregion
 
     #region OnSizeChanged
@@ -180,12 +199,12 @@ public class WebView2Control : Control, IDisposable
         this.Dispose();
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
         if (_isDisposed) return;
 
         _controller?.Close();//.Dispose();
-        _environment = null;
+        //_environment = null;
         _controller = null;
         _isDisposed = true;
     }
