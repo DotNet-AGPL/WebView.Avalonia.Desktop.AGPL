@@ -13,7 +13,7 @@ namespace WebView.Avalonia.Windows.WebView2;
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
 {
-    private static ILogger logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<WebView2Control>();
+    private static ILogger logger = LoggerFactoryTool.GetLogger<WebViewImp>();
     
     public override event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
 
