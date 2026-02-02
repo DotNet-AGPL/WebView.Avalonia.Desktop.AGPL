@@ -14,7 +14,7 @@ namespace AvaloniaApp;
 
 public class WebView2Control : Control, IDisposable
 {
-    private static ILogger<WebView2Control> logger = LoggerFactoryTool.GetLogger<WebView2Control>();
+    private static ILogger logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<WebView2Control>();
 
     #region 依赖属性（用于绑定/设置网址）
     public static readonly StyledProperty<string?> UrlProperty = AvaloniaProperty.Register<WebView2Control, string?>(nameof(Url));

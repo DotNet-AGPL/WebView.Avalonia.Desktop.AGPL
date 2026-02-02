@@ -10,7 +10,7 @@ namespace AvaloniaApp
 {
     internal class Program
     {
-        private static ILogger<Program> logger = LoggerFactoryTool.GetLogger<Program>();
+        private static ILogger logger = LoggerFactoryTool.GetLoggerFactory().CreateLogger<Program>();
 
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
