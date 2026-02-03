@@ -30,8 +30,8 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         {
             return;
         }
-
-        typeof(WebView2Control).RegisterDependencyType().SetLoaderDllFolderPath();
+        
+        typeof(WebView2Control).RegisterWebView2DependencyType().SetLoaderDllFolderPath();
 
         logger.LogInformation("static WebView2Control()");
     }
@@ -49,6 +49,8 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
     }
 
     //[UnconditionalSuppressMessage("AOT", "IL3050", Justification = "WebView2 初始化已验证 AOT 兼容")]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(WebViewNavigationStartingEventArgs))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(CoreWebView2NavigationCompletedEventArgs))]
     private async Task LoadWebView2(Control? obj)
     {
         logger.LogInformation("InitializeWebView2()");

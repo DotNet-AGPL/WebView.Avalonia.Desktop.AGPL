@@ -39,8 +39,9 @@
     <TrimmerRootAssembly Include="WebView.Avalonia.Windows" />
     <!--
     <TrimmerIncludeDependencies Include="WebView.Avalonia.Windows" />
-    -->
     <TrimmerRootAssembly Include="Microsoft.Web.WebView2.Core" />
+    -->
+    
     <!--
     <TrimmerRootAssembly Include="Avalonia" />
     <TrimmerRootAssembly Include="System.Private.CoreLib" />

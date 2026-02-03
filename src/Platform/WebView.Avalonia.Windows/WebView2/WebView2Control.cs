@@ -40,7 +40,7 @@ public class WebView2Control : Control, IDisposable
             return;
         }
 
-        typeof(WebView2Control).RegisterDependencyType().SetLoaderDllFolderPath();
+        typeof(WebView2Control).RegisterWebView2DependencyType().SetLoaderDllFolderPath();
 
         logger.LogInformation("static WebView2Control()");
     }
