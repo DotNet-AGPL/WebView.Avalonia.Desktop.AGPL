@@ -11,7 +11,7 @@ using WebView.Avalonia.Windows.Tools;
 namespace WebView.Avalonia.Windows.WebView2;
 
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
+internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
 {
     private static ILogger logger = LoggerFactoryTool.GetLogger<WebViewImp>();
     
@@ -31,7 +31,7 @@ public class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
             return;
         }
         
-        typeof(WebView2Control).RegisterWebView2DependencyType().SetLoaderDllFolderPath();
+        typeof(WebViewImp).RegisterWebView2DependencyType().SetLoaderDllFolderPath();
 
         logger.LogInformation("static WebView2Control()");
     }

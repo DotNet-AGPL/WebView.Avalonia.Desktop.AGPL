@@ -70,7 +70,7 @@ internal static class WebView2Extension
         return;
     }
 
-    internal static Type InitSwitch(this Type obj, ILogger<WebView2Control>? logger = default)
+    internal static Type InitSwitch(this Type obj, ILogger? logger = default)
     {
         var runtimeHostConfigurationOptions = new List<string>
         {

@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platform\WebView.Avalonia.Linux\WebView.Avalonia.Linux.csproj" />
-    <ProjectReference Include="..\Platform\WebView.Avalonia.Mac\WebView.Avalonia.Mac.csproj" />
-    <ProjectReference Include="..\Platform\WebView.Avalonia.Windows\WebView.Avalonia.Windows.csproj" />
+    <ProjectReference Include="..\WebView.Avalonia.Core\WebView.Avalonia.Core.csproj" />
+    <ProjectReference Include="..\Platform\WebView.Avalonia.Linux\WebView.Avalonia.Linux.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\Platform\WebView.Avalonia.Mac\WebView.Avalonia.Mac.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\Platform\WebView.Avalonia.Windows\WebView.Avalonia.Windows.csproj" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

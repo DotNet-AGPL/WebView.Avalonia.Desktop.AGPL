@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Platform\WebView.Avalonia.Windows\WebView.Avalonia.Windows.csproj" />
+    <ProjectReference Include="..\..\WebView.Avalonia.Desktop\WebView.Avalonia.Desktop.csproj" />
   </ItemGroup>
 
   <ItemGroup>
