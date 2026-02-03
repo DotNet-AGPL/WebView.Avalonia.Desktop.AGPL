@@ -32,5 +32,5 @@ internal class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace()
-            .UseWebView2();
+            .UseWinJitWebView2();
 }

@@ -7,7 +7,7 @@ namespace WebView.Avalonia.Windows;
 
 public static class AppBuilderExtension
 {
-    public static AppBuilder UseWebView2(this AppBuilder appBuilder) 
+    public static AppBuilder UseWinJitWebView2(this AppBuilder appBuilder) 
     {
         WebViewLocator.RegisterSingleton<WebViewDef, WebViewImp>();
 
