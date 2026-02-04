@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
-using WebView.Avalonia.Windows.Tools;
+using WebView.Avalonia.Core.Tools;
 
 namespace AvaloniaApp2
 {

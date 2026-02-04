@@ -42,7 +42,7 @@ internal static class AotAsyncTaskTool
         catch (Exception ex)
         {
             // 可自定义异常日志逻辑
-            logger?.LogError($"AOT RunSafeAsync is fail: {ex.Message}；{ex.StackTrace}");
+            logger?.LogInformation($"AOT RunSafeAsync is fail: {ex.Message}；{ex.StackTrace}");
         }
     }
 
@@ -54,7 +54,7 @@ internal static class AotAsyncTaskTool
         }
         catch (Exception ex)
         {
-            logger?.LogError($"AOT RunSafeAsync is fail: {ex.Message}；{ex.StackTrace}");
+            logger?.LogInformation($"AOT RunSafeAsync is fail: {ex.Message}；{ex.StackTrace}");
 
             return default!;
         }

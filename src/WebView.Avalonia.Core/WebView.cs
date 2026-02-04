@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
 using WebView.Avalonia.Core.Models;
-using WebView.Avalonia.Windows.Tools;
+using WebView.Avalonia.Core.Tools;
 using WebViewCore.Ioc;
 
 namespace WebView.Avalonia.Core;

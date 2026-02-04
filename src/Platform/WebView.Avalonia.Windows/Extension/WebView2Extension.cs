@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
-using Microsoft.Extensions.Logging;
-using WebView.Avalonia.Windows.WebView2;
 
 namespace WebView.Avalonia.Windows.Extension;
 
@@ -12,28 +10,6 @@ internal static class WebView2Extension
     {
         return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows) && RuntimeFeature.IsDynamicCodeCompiled;
     }
-
-    /*
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.MarshalAsAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.InAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.OutAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.UnmanagedType))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.CharSet))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Microsoft.Web.WebView2.Core.CoreWebView2Controller))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Microsoft.Web.WebView2.Core.CoreWebView2Environment))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Microsoft.Web.WebView2.Core.CoreWebView2EnvironmentOptions))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.CoreWebView2EnvironCoreWebView2CreateCoreWebView2ControllerCompletedHandlermentOptions", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Environment", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2EnvironmentOptions", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core")]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler", "Microsoft.Web.WebView2.Core")]
-    internal static Type RegisterDependencyType(this Type obj)
-    {
-        Console.WriteLine("register the dependency type of webview ");
-
-        return obj;
-    }
-    */
 
     internal static Type SetLoaderDllFolderPath(this Type obj)
     {
@@ -68,45 +44,6 @@ internal static class WebView2Extension
         coreWebView2Controller.NotifyParentWindowPositionChanged();
 
         return;
-    }
-
-    internal static Type InitSwitch(this Type obj, ILogger? logger = default)
-    {
-        var runtimeHostConfigurationOptions = new List<string>
-        {
-            "Microsoft.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability",
-            "System.ComponentModel.DefaultValueAttribute.IsSupported",
-            "System.ComponentModel.Design.IDesignerHost.IsSupported",
-            "System.ComponentModel.TypeConverter.EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization",
-            "System.ComponentModel.TypeDescriptor.IsComObjectDescriptorSupported",
-            "System.Reflection.Metadata.MetadataUpdater.IsSupported",
-            "System.Resources.ResourceManager.AllowCustomResourceTypes",
-            "System.Resources.UseSystemResourceKeys",
-            "System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported",
-            "System.Runtime.InteropServices.BuiltInComInterop.IsSupported",
-            "System.Runtime.InteropServices.EnableConsumingManagedCodeFromNativeHosting",
-            "System.Runtime.InteropServices.EnableCppCLIHostActivation",
-            "System.Runtime.InteropServices.Marshalling.EnableGeneratedComInterfaceComImportInterop",
-            "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization",
-            "System.StartupHookProvider.IsSupported",
-            "System.Threading.Thread.EnableAutoreleasePool",
-            "System.Text.Encoding.EnableUnsafeUTF7Encoding",
-            "System.Text.Json.JsonSerializer.IsReflectionEnabledByDefault"
-        };
-
-        foreach (var runtimeHost in runtimeHostConfigurationOptions)
-        {
-            if (!AppContext.TryGetSwitch(runtimeHost, out bool isEnabled) || !isEnabled)
-            {
-                // 强制启用COM开关（运行时兜底）
-                AppContext.SetSwitch(runtimeHost, true);
-            }
-
-            AppContext.TryGetSwitch(runtimeHost, out bool temp);
-            logger?.LogInformation($"{runtimeHost}：{temp}");
-        }
-
-        return obj;
     }
 
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.MarshalAsAttribute))]
@@ -755,29 +692,6 @@ internal static class WebView2Extension
             foreach (var methodName in methods2.Keys.Except(methods1.Keys))
             {
                 ConsoleWriteLine($"类型{typeName}中，A1缺失方法：{methodName}");
-            }
-
-            // 方法存在但IL代码不同（简单对比：IL指令的字节数，精准对比可解析IL指令）
-            foreach (var methodName in methods1.Keys.Intersect(methods2.Keys))
-            {
-                var m11 = methods1[methodName];
-                var m21 = methods2[methodName];
-
-                if (m11.FullName != m21.FullName)
-                {
-                    ConsoleWriteLine($"类型{typeName}中，方法{methodName}的IL代码不同！");
-                }
-
-                /*
-                m11.FullName;
-                // 获取方法的IL字节码
-                var il1 = m11.Body.GetILBytes() ?? Array.Empty<byte>();
-                var il2 = m21.Body?.GetILBytes() ?? Array.Empty<byte>();
-                if (!il1.SequenceEqual(il2))
-                {
-                    ConsoleWriteLine($"类型{typeName}中，方法{methodName}的IL代码不同！");
-                }
-                */
             }
         }
     }

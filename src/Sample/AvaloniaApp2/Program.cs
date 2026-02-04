@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Microsoft.Extensions.Logging;
+using WebView.Avalonia.Core.Tools;
 using WebView.Avalonia.Desktop;
-using WebView.Avalonia.Windows.Tools;
 
 namespace AvaloniaApp2;
 

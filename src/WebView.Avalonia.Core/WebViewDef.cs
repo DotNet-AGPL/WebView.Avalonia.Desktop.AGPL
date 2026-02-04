@@ -6,11 +6,11 @@ using WebView.Avalonia.Core.Models;
 namespace WebView.Avalonia.Core;
 
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-public abstract class WebViewDef : IDisposable
+internal abstract class WebViewDef : IDisposable
 {
-    public virtual event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
+    internal protected virtual event EventHandler<WebViewNavigationStartingEventArgs>? NavigationStarting;
 
-    public virtual event EventHandler<WebViewNavigationCompletedEventArgs>? NavigationCompleted;
+    internal protected virtual event EventHandler<WebViewNavigationCompletedEventArgs>? NavigationCompleted;
 
     private protected WebView? webviewInstance;
 

@@ -84,8 +84,8 @@
 				<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 			</PropertyGroup>
 			<ItemGroup>
+        <PackageReference Include="PolySharp" />
 				<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
-				<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 			</ItemGroup>
 		</When>
 		<When Condition="'$(Configuration)' == 'Debug'">

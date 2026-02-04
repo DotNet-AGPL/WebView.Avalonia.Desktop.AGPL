@@ -11,9 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" />
     <PackageReference Include="Microsoft.Web.WebView2" PrivateAssets="All" />
-    <PackageReference Include="Mono.Cecil"  Condition="'$(Configuration)' == 'Debug' "  PrivateAssets="All" />
+    <PackageReference Include="Mono.Cecil" Condition="'$(Configuration)' == 'Debug' " PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +41,9 @@
     <TrimmerRootAssembly Include="System.Threading.Tasks" />
     <TrimmerRootAssembly Include="System.Private.Xml" />
     <TrimmerRootAssembly Include="System.Text.Encoding.Extensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tools\" />
   </ItemGroup>
 
   <Import Project="$(RepositoryDirectory)Directory.Packages.targets" />

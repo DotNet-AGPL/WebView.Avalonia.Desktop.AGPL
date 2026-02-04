@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 
-public static class WebViewLocator
+internal static class WebViewLocator
 {
     private static IServiceCollection serviceCollection = new ServiceCollection();
     //private static IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Serilog;
 
-namespace WebView.Avalonia.Windows.Tools;
+namespace WebView.Avalonia.Core.Tools;
 
 public static class LoggerFactoryTool
 {
