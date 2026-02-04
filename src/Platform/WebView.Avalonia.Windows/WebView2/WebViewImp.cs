@@ -195,6 +195,9 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
     {
         if (_isDisposed) return;
 
+        _controller?.CoreWebView2.NavigationStarting -= CoreWebView2_NavigationStarting;
+        _controller?.CoreWebView2.NavigationCompleted -= CoreWebView2_NavigationCompleted;
+
         _controller?.Close();
         _controller = null;
         _isDisposed = true;

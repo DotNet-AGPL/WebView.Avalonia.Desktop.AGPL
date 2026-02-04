@@ -36,9 +36,8 @@ public class WebView : Control, IDisposable
         webViewInstance = WebViewLocator.ResolveInstance<WebViewDef>();
 
         webViewInstance?.SetControl(this);
-        //webViewInstance?.NavigationStarting += WebView_NavigationStarting;
-        webViewInstance?.NavigationStarting += (sender, e) => NavigationStarting?.Invoke(sender, e);
-        webViewInstance?.NavigationCompleted += (sender, e) => NavigationCompleted?.Invoke(sender, e);
+        webViewInstance?.NavigationStarting += WebView_NavigationStarting;
+        webViewInstance?.NavigationCompleted += WebView_NavigationCompleted;
     }
 
     private void WebView_NavigationStarting(object? sender, WebViewNavigationStartingEventArgs e)
@@ -101,6 +100,9 @@ public class WebView : Control, IDisposable
 
     public void Dispose()
     {
+        webViewInstance?.NavigationStarting -= WebView_NavigationStarting;
+        webViewInstance?.NavigationCompleted -= WebView_NavigationCompleted;
+
         webViewInstance?.Dispose();
     }
     #endregion
