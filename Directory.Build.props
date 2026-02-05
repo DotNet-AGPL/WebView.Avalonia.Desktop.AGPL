@@ -84,7 +84,7 @@
 				<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 			</PropertyGroup>
 			<ItemGroup>
-        <PackageReference Include="PolySharp" />
+        <PackageReference Include="PolySharp" PrivateAssets="All" />
 				<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
 			</ItemGroup>
 		</When>

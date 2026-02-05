@@ -1,17 +1,33 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Avalonia;
 using Avalonia.Controls;
 
 namespace WebView.Avalonia.Windows.Extension;
 
 internal static class WebView2Extension
 {
+    internal static void ResetWebViewSize(this Microsoft.Web.WebView2.Core.CoreWebView2Controller coreWebView2Controller, Control? control)
+    {
+        if (coreWebView2Controller is null || control is null)
+        {
+            return;
+        }
+
+        var scale = TopLevel.GetTopLevel(control)?.RenderScaling ?? 1;
+
+        coreWebView2Controller.Bounds = new System.Drawing.Rectangle(0, 0, Convert.ToInt32(control.Bounds.Width * scale), Convert.ToInt32(control.Bounds.Height * scale));
+        coreWebView2Controller.NotifyParentWindowPositionChanged();
+
+        return;
+    }
+
     internal static bool IsWindowsJIT()
     {
         return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows) && RuntimeFeature.IsDynamicCodeCompiled;
     }
 
-    internal static Type SetLoaderDllFolderPath(this Type obj)
+    internal static AppBuilder SetWebView2LoaderDllFolderPath(this AppBuilder obj)
     {
         var winArch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture switch
         {
@@ -29,21 +45,6 @@ internal static class WebView2Extension
         }
 
         return obj;
-    }
-
-    internal static void ResetWebViewSize(this Microsoft.Web.WebView2.Core.CoreWebView2Controller coreWebView2Controller, Control? control)
-    {
-        if (coreWebView2Controller is null || control is null)
-        {
-            return;
-        }
-
-        var scale = TopLevel.GetTopLevel(control)?.RenderScaling ?? 1;
-
-        coreWebView2Controller.Bounds = new System.Drawing.Rectangle(0, 0, Convert.ToInt32(control.Bounds.Width * scale), Convert.ToInt32(control.Bounds.Height * scale));
-        coreWebView2Controller.NotifyParentWindowPositionChanged();
-
-        return;
     }
 
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.InteropServices.MarshalAsAttribute))]
@@ -578,7 +579,7 @@ internal static class WebView2Extension
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2WebResourceRequest", "Microsoft.Web.WebView2.Core")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2WebResourceResponse", "Microsoft.Web.WebView2.Core")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, "Microsoft.Web.WebView2.Core.Raw.ICoreWebView2ZoomFactorChangedEventHandler", "Microsoft.Web.WebView2.Core")]
-    internal static Type RegisterWebView2DependencyType(this Type obj)
+    internal static AppBuilder RegisterWebView2DependencyType(this AppBuilder obj)
     {
         Console.WriteLine("register the dependency type of webview2 ");
         

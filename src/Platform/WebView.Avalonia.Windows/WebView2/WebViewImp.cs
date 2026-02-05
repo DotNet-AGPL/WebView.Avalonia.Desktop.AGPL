@@ -32,7 +32,7 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
             return;
         }
         
-        typeof(WebViewImp).RegisterWebView2DependencyType().SetLoaderDllFolderPath();
+        //typeof(WebViewImp).RegisterWebView2DependencyType().SetLoaderDllFolderPath();
 
         logger.LogInformation("static WebView2Control()");
     }
