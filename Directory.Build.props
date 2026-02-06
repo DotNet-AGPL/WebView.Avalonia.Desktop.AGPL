@@ -6,9 +6,15 @@
 		<BuildToolsDirectory>$(RepositoryDirectory)buildtools/</BuildToolsDirectory>
     <BaseIntermediateOutputPath>$(RepositoryDirectory)_output/$(MSBuildProjectName)/obj/</BaseIntermediateOutputPath>
 		<OutputPath>$(RepositoryDirectory)_output/$(MSBuildProjectName)/bin/</OutputPath>
+    <EnableExpressionTreePrecompilation>true</EnableExpressionTreePrecompilation>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>$(RepositoryDirectory)_output/$(MSBuildProjectName)/obj/generatedFiles</CompilerGeneratedFilesOutputPath>
 	</PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+  </ItemGroup>
 
   <!-- Import Project="$(BuildToolsDirectory)Directory.build.common.props" / -->
   <PropertyGroup>
