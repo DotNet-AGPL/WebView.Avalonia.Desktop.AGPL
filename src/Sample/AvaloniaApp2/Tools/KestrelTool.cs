@@ -145,7 +145,7 @@ public static class KestrelTool
             // 使用默认文件中间件，设置默认文件列表，优先级从高到低
             app.UseDefaultFiles(new DefaultFilesOptions
             {
-                DefaultFileNames = [.. new[] { "index.html", "default!.html", "default!.htm" }]
+                DefaultFileNames = [.. new[] { "index.html", "default.html", "default.htm" }]
             });
 
             // 添加静态文件中间件，这会启用对wwwroot目录下静态文件的访问
@@ -258,7 +258,7 @@ public static class KestrelTool
             // 使用默认文件中间件，设置默认文件列表，优先级从高到低
             app.UseDefaultFiles(new DefaultFilesOptions
             {
-                DefaultFileNames = [.. new[] { "index.html", "default!.html", "default!.htm" }]
+                DefaultFileNames = [.. new[] { "index.html", "default.html", "default.htm" }]
             });
 
             // 添加静态文件中间件，这会启用对wwwroot目录下静态文件的访问
@@ -361,7 +361,7 @@ public static class KestrelTool
             // 使用默认文件中间件，设置默认文件列表，优先级从高到低
             app.UseDefaultFiles(new DefaultFilesOptions
             {
-                DefaultFileNames = [.. new[] { "index.html", "default!.html", "default!.htm" }]
+                DefaultFileNames = [.. new[] { "index.html", "default.html", "default.htm" }]
             });
 
             // 添加静态文件中间件，这会启用对wwwroot目录下静态文件的访问
