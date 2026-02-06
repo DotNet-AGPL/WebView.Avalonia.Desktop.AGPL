@@ -13,4 +13,5 @@
     <ProjectReference Include="..\Platform\WebView.Avalonia.Windows\WebView.Avalonia.Windows.csproj" PrivateAssets="All" />
   </ItemGroup>
 
+  <Import Project="$(RepositoryDirectory)Directory.Packages.targets" />
 </Project>
