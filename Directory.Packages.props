@@ -14,6 +14,7 @@
     <PackageVersion Include="ReactiveUI.Avalonia" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="WebkitGtkSharp" Version="3.24.24.117-develop" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3650.58" />

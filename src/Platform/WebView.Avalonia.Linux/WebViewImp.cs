@@ -2,10 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls;
 using Microsoft.Extensions.Logging;
+using WebKit;
+using WebView.Avalonia.Core;
 using WebView.Avalonia.Core.Models;
 using WebView.Avalonia.Core.Tools;
 using WebView.Avalonia.Linux.Models;
-using WebViewCore.Ioc;
 
 namespace WebView.Avalonia.Linux;
 
@@ -22,6 +23,7 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
     internal protected override event EventHandler<WebViewNavigationCompletedEventArgs>? NavigationCompleted;
 
     #region Field
+    private WebKit.WebView? _webView;
     private bool _isInitialized;
     private bool _isDisposed;
     private ulong _navigationId;
@@ -63,11 +65,7 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
 
     private bool IsLinuxRuntime()
     {
-#if __LINUX__
-        return true;
-#else
-        return false;
-#endif
+        return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux);
     }
 
     /// <summary>
@@ -92,6 +90,10 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         // - Use P/Invoke to call WebKitGTK APIs
         // - Or use the Avalonia Accelerate WebView component
 
+        _webView = new WebKit.WebView();
+
+        _webView.LoadChanged += WebKitWebView_LoadChanged;
+
         _isInitialized = true;
         
         logger.LogInformation("Linux WebView: WebKit placeholder initialized");
@@ -103,6 +105,28 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
             NavigateToUrl(url);
         }
     }
+
+    private void WebKitWebView_LoadChanged(object? sender, LoadChangedArgs e)
+    {
+        logger.LogInformation("WebKitWebView_LoadChangedAction： " + e.ToString());
+        
+        switch (e.LoadEvent)
+        {
+            default:
+                break;
+            case LoadEvent.Started:
+
+                Console.WriteLine("开始加载网页");
+                NavigationStarting?.Invoke(sender, new WebKitWebViewNavigationStartingEventArgs((WebKit.WebView)sender, e));
+                break;
+            case LoadEvent.Finished:
+                Console.WriteLine("网页加载完成");
+                NavigationCompleted?.Invoke(sender, new WebKitWebViewNavigationCompletedEventArgs(e));
+                break;
+        }
+    }
+
+
 
     /// <summary>
     /// Navigate to a URL
@@ -226,6 +250,8 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         }
 
         logger.LogInformation("Linux WebView: Disposing");
+
+        _webView?.LoadChanged -= WebKitWebView_LoadChanged;
 
         NavigationStarting = null;
         NavigationCompleted = null;

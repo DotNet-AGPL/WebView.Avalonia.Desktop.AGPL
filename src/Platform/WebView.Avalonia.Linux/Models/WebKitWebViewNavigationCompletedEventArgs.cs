@@ -1,3 +1,4 @@
+using WebKit;
 using WebView.Avalonia.Core.Models;
 
 namespace WebView.Avalonia.Linux.Models;
@@ -5,15 +6,22 @@ namespace WebView.Avalonia.Linux.Models;
 /// <summary>
 /// Linux WebView navigation completed event args
 /// </summary>
-public class LinuxWebViewNavigationCompletedEventArgs : WebViewNavigationCompletedEventArgs
+public class WebKitWebViewNavigationCompletedEventArgs : WebViewNavigationCompletedEventArgs
 {
+    private LoadChangedArgs eventArgs;
+
     private readonly bool _isSuccess;
     private readonly ulong _navigationId;
     private readonly WebViewWebErrorStatus _webErrorStatus;
     private readonly int _httpStatusCode;
     private readonly string? _errorMessage;
 
-    public LinuxWebViewNavigationCompletedEventArgs(
+    public WebKitWebViewNavigationCompletedEventArgs(LoadChangedArgs eventArgs)
+    {
+        this.eventArgs = eventArgs;
+    }
+
+    public WebKitWebViewNavigationCompletedEventArgs(
         bool isSuccess,
         ulong navigationId = 0,
         WebViewWebErrorStatus webErrorStatus = WebViewWebErrorStatus.Unknown,

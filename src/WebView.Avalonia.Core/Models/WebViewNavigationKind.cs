@@ -4,6 +4,7 @@ namespace WebView.Avalonia.Core.Models;
 
 public enum WebViewNavigationKind
 {
+    None,
     // 摘要:
     //     A navigation caused by `WebView.Reload()`, `location.reload()`, the end
     //     user using F5 or other UX, or other reload mechanisms to reload the current document

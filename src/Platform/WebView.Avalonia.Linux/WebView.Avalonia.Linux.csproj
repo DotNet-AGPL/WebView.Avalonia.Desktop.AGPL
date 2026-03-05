@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="WebkitGtkSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\WebView.Avalonia.Core\WebView.Avalonia.Core.csproj" />
   </ItemGroup>
 
