@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <UseLinuxAvalonia>true</UseLinuxAvalonia>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\WebView.Avalonia.Core\WebView.Avalonia.Core.csproj" />
   </ItemGroup>
 
-  <Import Project="$(RepositoryDirectory)Directory.Packages.targets" />
 </Project>
