@@ -25,7 +25,7 @@ namespace AvaloniaApp.Tools
 
             /*
             // <TrimmerRootAssembly Include="System.Drawing" />
-            var list = Directory.GetFiles("E:\\Z_E_Data\\Github\\Repos\\DotNet-AGPL\\WebView.Avalonia.Destop.AGPL\\_output\\AvaloniaApp\\bin\\net10.0\\publish\\scd_notrim_win-x64")
+            var list = Directory.GetFiles("E:\\Z_E_Data\\Github\\Repos\\DotNet-AGPL\\WebView.Avalonia.Destop.AGPL\\.output\\AvaloniaApp\\bin\\net10.0\\publish\\scd_notrim_win-x64")
                 .Select(m => Path.GetFileName(m))
                 .Where(m=> m.EndsWith(".dll"))
                 .Select(m=> m.Substring(0, m.LastIndexOf(".dll")))

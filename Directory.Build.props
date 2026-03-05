@@ -4,11 +4,11 @@
 		<RepositoryDirectory>$(SolutionDir)</RepositoryDirectory>
     <RepositoryDirectory Condition=" '$(SolutionDir)' == '' ">$(ProjectDir)</RepositoryDirectory>
 		<BuildToolsDirectory>$(RepositoryDirectory)buildtools/</BuildToolsDirectory>
-    <BaseIntermediateOutputPath>$(RepositoryDirectory)_output/$(MSBuildProjectName)/obj/</BaseIntermediateOutputPath>
-		<OutputPath>$(RepositoryDirectory)_output/$(MSBuildProjectName)/bin/</OutputPath>
+    <BaseIntermediateOutputPath>$(RepositoryDirectory).output/$(MSBuildProjectName)/obj/</BaseIntermediateOutputPath>
+		<OutputPath>$(RepositoryDirectory).output/$(MSBuildProjectName)/bin/</OutputPath>
     <EnableExpressionTreePrecompilation>true</EnableExpressionTreePrecompilation>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(RepositoryDirectory)_output/$(MSBuildProjectName)/obj/generatedFiles</CompilerGeneratedFilesOutputPath>
+    <CompilerGeneratedFilesOutputPath>$(RepositoryDirectory).output/$(MSBuildProjectName)/obj/generatedFiles</CompilerGeneratedFilesOutputPath>
 	</PropertyGroup>
 
   <ItemGroup>
