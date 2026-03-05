@@ -19,4 +19,7 @@
     <Project Path="src/Sample/AvaloniaApp2/AvaloniaApp2.csproj" Id="3c9af577-8008-42b8-ba9b-55ca2bdb8d0e" />
     <Project Path="src/Sample/AvaloniaAppEmpty/AvaloniaAppEmpty.csproj" Id="2544cd0a-0431-4037-a2ce-c07b24ab086f" />
   </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/WebView.Avalonia.Core.Tests.csproj" />
+  </Folder>
 </Solution>
