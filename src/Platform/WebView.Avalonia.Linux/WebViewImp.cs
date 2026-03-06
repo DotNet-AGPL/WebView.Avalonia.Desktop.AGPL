@@ -92,6 +92,8 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
 
         _webView = new WebKit.WebView();
 
+        _webView.DecidePolicy += _webView_DecidePolicy;
+
         _webView.LoadChanged += WebKitWebView_LoadChanged;
 
         _isInitialized = true;
@@ -106,6 +108,12 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
         }
     }
 
+    private void _webView_DecidePolicy(object o, DecidePolicyArgs args)
+    {
+        //args.
+        throw new NotImplementedException();
+    }
+
     private void WebKitWebView_LoadChanged(object? sender, LoadChangedArgs e)
     {
         logger.LogInformation("WebKitWebView_LoadChangedAction： " + e.ToString());
@@ -117,7 +125,7 @@ internal class WebViewImp : WebView.Avalonia.Core.WebViewDef, IDisposable
             case LoadEvent.Started:
 
                 Console.WriteLine("开始加载网页");
-                NavigationStarting?.Invoke(sender, new WebKitWebViewNavigationStartingEventArgs((WebKit.WebView)sender, e));
+                NavigationStarting?.Invoke(sender, new WebKitWebViewNavigationStartingEventArgs(sender as WebKit.WebView, e));
                 break;
             case LoadEvent.Finished:
                 Console.WriteLine("网页加载完成");
